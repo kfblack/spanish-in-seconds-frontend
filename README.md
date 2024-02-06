@@ -4,7 +4,7 @@
 #### [Linkedin](https://www.linkedin.com/in/kalin-black/) | [GitHub](https://github.com/kfblack)
 ***
 #### **_Description_**
-This project is a full-stack MERN application, on learning Spanish for begginers! You will be able to create your own custom user account, track your learning progress, and partake in various different learning activities and quizzes to test your understanding!
+This project is a full-stack MERN application, on learning the basics of Spanish, geared toward travel! Many people who wish to travel are eager to learn the basics of a language, but don't know where to look for quick and easy ways to learn the essentials, but with this site, you can! The app will provide the basics, but will also extend further so that those that wish to take a deeper dive, have the ability to do so. You will be able to create your own custom user account, track your learning progress, and partake in various different learning activities and quizzes to test your understanding!
 ***
 #### **_Technologies Used_**
 - HTML
