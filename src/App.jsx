@@ -7,6 +7,9 @@ import Signin from './components/Signin'
 import { CheckSession } from './services/Auth'
 import Lesson from './components/Lesson'
 import Progress from './components/Progress'
+import LessonOne from './components/LessonOne'
+import LessonTwo from './components/LessonTwo'
+import LessonThree from './components/LessonThree'
 
 function App() {
 
@@ -36,6 +39,9 @@ function App() {
           <Route path='/signin' element={<Signin setUser={setUser}/>} />
           <Route path='/lessons' element={<Lesson />} />
           <Route path='/progress' element={<Progress />} />
+          <Route path='/lessons/1' element={<LessonOne />}/>
+          <Route path='/lessons/2' element={<LessonTwo />}/>
+          <Route path='/lessons/3' element={<LessonThree />}/>
         </Routes>
       </main>
       <footer>
