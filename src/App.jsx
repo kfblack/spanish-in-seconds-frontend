@@ -5,6 +5,8 @@ import Home from './components/Home'
 import Register from './components/Register'
 import Signin from './components/Signin'
 import { CheckSession } from './services/Auth'
+import Lesson from './components/Lesson'
+import Progress from './components/Progress'
 
 function App() {
 
@@ -32,6 +34,8 @@ function App() {
           <Route path='/' element={<Home />}/>
           <Route path='/register' element={<Register />}/>
           <Route path='/signin' element={<Signin setUser={setUser}/>} />
+          <Route path='/lessons' element={<Lesson />} />
+          <Route path='/progress' element={<Progress />} />
         </Routes>
       </main>
       <footer>
