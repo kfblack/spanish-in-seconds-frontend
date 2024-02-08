@@ -9,7 +9,7 @@ This project is a full-stack MERN application, on learning the basics of Spanish
 #### **_Technologies Used_**
 - HTML
 - CSS
-- Tailwind
+- Material UI
 - JavaScript
 - VS Code
 - MongoDB
