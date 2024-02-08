@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
+import Sidebar from './Sidebar'
 
 const CreateLesson = () => {
 
@@ -66,6 +67,7 @@ const CreateLesson = () => {
                     />
                 <button type='submit'>Create Lesson</button>
             </form>
+            <Sidebar />
         </div>
     )
 }

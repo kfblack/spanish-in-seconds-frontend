@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Client from '../services/api.js'
+import Sidebar from './Sidebar'
 
-const CreateActivity = () => {
+const CreateActivity = ({activities}) => {
 
     let navigate = useNavigate();
-
-    const CreateActivity = () => {
-
-    }
 
     const [formValues, setFormValues] = useState({
         questionType: '',
@@ -20,25 +18,17 @@ const CreateActivity = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await CreateActivity({
-            questionType: formValues.questionType,
-            content: formValues.content,
-            activityAnswer: [],
-        })
-        setFormValues({
-            questionType: '',
-            content: '',
-            lesson: [],
-            activityAnswer: [],
-        })
-        navigate('/lessons/:id')
+        let newActivity = {...formValues, activityAnswer: []}
+        await Client.post('/activities', newActivity)
+        navigate('/createActivity')
     }
 
     return (
         <div>
+        <div>
             <h1>Create an Activity:</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor='questionType'>Question Type:</label>
+                <label htmlFor='level'>Question Type:</label>
                     <input
                     onChange={handleChange}
                     name="questionType"
@@ -56,17 +46,19 @@ const CreateActivity = () => {
                     value={formValues.content}
                     required
                     />
-                <label htmlFor='activityAnswer'>Answers:</label>
-                    <input
-                    onChange={handleChange}
-                    name="activityAnswer"
-                    type="text"
-                    placeholder="Answers"
-                    value={formValues.activityAnswer}
-                    required
-                    />
-                <button>Create Activity</button>
+                <button type='submit'>Create Activity</button>
             </form>
+        </div>
+        <div>
+            <h1>Activities</h1>
+            {activities.map(activity => (
+                <div key={activities.id}>
+                    <h2>Question Type: {activity.questionType}</h2>
+                    <h3>Activity: {activity.content}</h3>
+                </div>
+            ))}
+        </div>
+        <Sidebar />
         </div>
     )
 }

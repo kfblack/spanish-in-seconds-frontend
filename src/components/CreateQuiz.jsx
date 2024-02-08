@@ -1,21 +1,15 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Client from '../services/api.js'
+import Sidebar from './Sidebar'
 
-const CreateQuiz = () => {
+const CreateQuiz = ({quizzes}) => {
 
     let navigate = useNavigate();
 
-    const CreateQuiz = () => {
-
-    }
-
     const [formValues, setFormValues] = useState({
         title: '',
-        content: '',
         description: '',
-        level: '',
-        activities: [],
-        quiz: [],
     })
 
     const handleChange = (e) => [
@@ -24,85 +18,47 @@ const CreateQuiz = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await CreateLesson({
-            title: formValues.title,
-            content: formValues.content,
-            description: formValues.description,
-            level: formValues.level,
-            activities: [],
-            quiz: [],
-        })
-        setFormValues({
-            title: '',
-            content: '',
-            description: '',
-            level: '',
-            activities: [],
-            quiz: [],
-        })
-        navigate('/lessons')
+        let newQuiz = {...formValues, questions: []}
+        await Client.post('/quizzes', newQuiz)
+        navigate('/createQuiz')
     }
 
     return (
         <div>
+        <div>
             <h1>Create a Quiz:</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor='level'>Level:</label>
-                    <input
-                    onChange={handleChange}
-                    name="level"
-                    type="number"
-                    placeholder="Difficulty level"
-                    value={formValues.level}
-                    required
-                    />
-                <label htmlFor='title'>Title:</label>
+                <label htmlFor='level'>Title:</label>
                     <input
                     onChange={handleChange}
                     name="title"
                     type="text"
-                    placeholder="Lesson Title"
+                    placeholder="Quiz title"
                     value={formValues.title}
                     required
                     />
-                <label htmlFor='description'>Description:</label>
+                <label htmlFor='content'>Description:</label>
                     <input
                     onChange={handleChange}
                     name="description"
                     type="text"
-                    placeholder="Lesson Description"
+                    placeholder="Quiz description"
                     value={formValues.description}
                     required
                     />
-                <label htmlFor='content'>Content:</label>
-                    <input
-                    onChange={handleChange}
-                    name="content"
-                    type="text"
-                    placeholder="Lesson Content"
-                    value={formValues.content}
-                    required
-                    />
-                <label htmlFor='activities'>Activities Included:</label>
-                    <input
-                    onChange={handleChange}
-                    name="activities"
-                    type="text"
-                    placeholder="Lesson Activities"
-                    value={formValues.activities}
-                    required
-                    />
-                <label htmlFor='quiz'>Quiz:</label>
-                    <input
-                    onChange={handleChange}
-                    name="quiz"
-                    type="text"
-                    placeholder="Lesson Quiz"
-                    value={formValues.quiz}
-                    required
-                    />
-                <button>Create Lesson</button>
+                <button type='submit'>Create Quiz</button>
             </form>
+        </div>
+        <div>
+            <h1>Quizzes</h1>
+            {quizzes.map(quiz => (
+                <div key={quizzes.id}>
+                    <h2>Title: {quiz.title}</h2>
+                    <h3>Description: {quiz.description}</h3>
+                </div>
+            ))}
+        </div>
+        <Sidebar />
         </div>
     )
 }

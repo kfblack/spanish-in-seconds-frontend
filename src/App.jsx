@@ -16,6 +16,8 @@ import Client from './services/api.js'
 function App() {
 
   const [lessons, setLessons] = useState([])
+  const [activities, setActivities] = useState([])
+  const [quizzes, setQuizzes] = useState([])
   const [user, setUser] = useState(null)
 
   const checkToken = async () => {
@@ -38,6 +40,22 @@ function App() {
     getLessons();
   }, [])
 
+  useEffect(() => {
+    const getActivities = async () => {
+      let res = await Client.get('/activities')
+      setActivities(res.data)
+    }
+    getActivities();
+  }, [])
+
+  useEffect(() => {
+    const getQuizzes = async () => {
+      let res = await Client.get('/quizzes')
+      setQuizzes(res.data)
+    }
+    getQuizzes();
+  }, [])
+
   return (
     <div>
       <header>
@@ -51,8 +69,8 @@ function App() {
           <Route path='/lessons' element={<Lesson lessons={lessons}/>} />
           <Route path='/progress' element={<Progress />} />
           <Route path='/create' element={<CreateLesson />}/>
-          <Route path='/createActivity' element={<CreateActivity />}/>
-          <Route path='/createQuiz' element={<CreateQuiz />}/>
+          <Route path='/createActivity' element={<CreateActivity activities={activities}/>}/>
+          <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes}/>}/>
         </Routes>
       </main>
       <footer>
