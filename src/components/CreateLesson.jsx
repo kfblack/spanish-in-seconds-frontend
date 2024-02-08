@@ -1,13 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Client from '../services/api.js'
 
 const CreateLesson = () => {
 
     let navigate = useNavigate();
-
-    const CreateLesson = () => {
-
-    }
 
     const [formValues, setFormValues] = useState({
         title: '',
@@ -22,18 +19,8 @@ const CreateLesson = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await CreateLesson({
-            title: formValues.title,
-            content: formValues.content,
-            description: formValues.description,
-            level: formValues.level,
-        })
-        setFormValues({
-            title: '',
-            content: '',
-            description: '',
-            level: '',
-        })
+        let newLesson = {...formValues, activities: [], quiz: []}
+        await Client.post('/lessons', newLesson)
         navigate('/lessons')
     }
 
@@ -77,7 +64,7 @@ const CreateLesson = () => {
                     value={formValues.content}
                     required
                     />
-                <button>Create Lesson</button>
+                <button type='submit'>Create Lesson</button>
             </form>
         </div>
     )
