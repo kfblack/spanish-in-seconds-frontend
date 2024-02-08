@@ -10,10 +10,12 @@ import Progress from './components/Progress'
 import CreateLesson from './components/CreateLesson'
 import CreateActivity from './components/CreateActivity'
 import CreateQuiz from './components/CreateQuiz'
+import Client from './services/api.js'
 
 
 function App() {
 
+  const [lessons, setLessons] = useState([])
   const [user, setUser] = useState(null)
 
   const checkToken = async () => {
@@ -28,6 +30,14 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    const getLessons = async () => {
+      let res = await Client.get('/lessons')
+      setLessons(res.data)
+    }
+    getLessons();
+  }, [])
+
   return (
     <div>
       <header>
@@ -38,7 +48,7 @@ function App() {
           <Route path='/' element={<Home />}/>
           <Route path='/register' element={<Register />}/>
           <Route path='/signin' element={<Signin setUser={setUser}/>} />
-          <Route path='/lessons' element={<Lesson />} />
+          <Route path='/lessons' element={<Lesson lessons={lessons}/>} />
           <Route path='/progress' element={<Progress />} />
           <Route path='/create' element={<CreateLesson />}/>
           <Route path='/createActivity' element={<CreateActivity />}/>
