@@ -8,6 +8,8 @@ import { CheckSession } from './services/Auth'
 import Lesson from './components/Lesson'
 import Progress from './components/Progress'
 import CreateLesson from './components/CreateLesson'
+import CreateActivity from './components/CreateActivity'
+import CreateQuiz from './components/CreateQuiz'
 
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
           <Route path='/lessons' element={<Lesson />} />
           <Route path='/progress' element={<Progress />} />
           <Route path='/create' element={<CreateLesson />}/>
+          <Route path='/createActivity' element={<CreateActivity />}/>
+          <Route path='/createQuiz' element={<CreateQuiz />}/>
         </Routes>
       </main>
       <footer>

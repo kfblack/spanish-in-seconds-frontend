@@ -12,8 +12,6 @@ const CreateActivity = () => {
     const [formValues, setFormValues] = useState({
         questionType: '',
         content: '',
-        lesson: [],
-        activityAnswer: [],
     })
 
     const handleChange = (e) => [
@@ -25,7 +23,6 @@ const CreateActivity = () => {
         await CreateActivity({
             questionType: formValues.questionType,
             content: formValues.content,
-            lesson: [],
             activityAnswer: [],
         })
         setFormValues({
@@ -57,15 +54,6 @@ const CreateActivity = () => {
                     type="text"
                     placeholder="Activity Content"
                     value={formValues.content}
-                    required
-                    />
-                <label htmlFor='lesson'>Which lesson?</label>
-                    <input
-                    onChange={handleChange}
-                    name="lesson"
-                    type="text"
-                    placeholder="Lesson activity references"
-                    value={formValues.lesson}
                     required
                     />
                 <label htmlFor='activityAnswer'>Answers:</label>

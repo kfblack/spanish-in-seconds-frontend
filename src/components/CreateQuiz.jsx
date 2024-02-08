@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const CreateLesson = () => {
+const CreateQuiz = () => {
 
     let navigate = useNavigate();
 
-    const CreateLesson = () => {
+    const CreateQuiz = () => {
 
     }
 
@@ -14,6 +14,8 @@ const CreateLesson = () => {
         content: '',
         description: '',
         level: '',
+        activities: [],
+        quiz: [],
     })
 
     const handleChange = (e) => [
@@ -27,19 +29,23 @@ const CreateLesson = () => {
             content: formValues.content,
             description: formValues.description,
             level: formValues.level,
+            activities: [],
+            quiz: [],
         })
         setFormValues({
             title: '',
             content: '',
             description: '',
             level: '',
+            activities: [],
+            quiz: [],
         })
         navigate('/lessons')
     }
 
     return (
         <div>
-            <h1>Create a Lesson:</h1>
+            <h1>Create a Quiz:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='level'>Level:</label>
                     <input
@@ -77,10 +83,28 @@ const CreateLesson = () => {
                     value={formValues.content}
                     required
                     />
+                <label htmlFor='activities'>Activities Included:</label>
+                    <input
+                    onChange={handleChange}
+                    name="activities"
+                    type="text"
+                    placeholder="Lesson Activities"
+                    value={formValues.activities}
+                    required
+                    />
+                <label htmlFor='quiz'>Quiz:</label>
+                    <input
+                    onChange={handleChange}
+                    name="quiz"
+                    type="text"
+                    placeholder="Lesson Quiz"
+                    value={formValues.quiz}
+                    required
+                    />
                 <button>Create Lesson</button>
             </form>
         </div>
     )
 }
 
-export default CreateLesson
+export default CreateQuiz
