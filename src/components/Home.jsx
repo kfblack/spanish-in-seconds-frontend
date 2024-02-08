@@ -15,14 +15,26 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-
+import HomeIcon from '@mui/icons-material/Home';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import QuizIcon from '@mui/icons-material/Quiz';
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 
 const Home = () => {
 
     const [state, setState] = useState({left: false})
+
+    const iconMapping = {
+        "Home": <HomeIcon />,
+        "Lessons": <NewspaperIcon />,
+        "My Progress": <CheckCircleIcon />,
+        "New Lesson": <CreateNewFolderIcon />,
+        "New Activity": <PlaylistAddIcon />,
+        "New Quiz": <QuizIcon />
+    }
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -40,11 +52,11 @@ const Home = () => {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                {['Home', 'Lessons', 'My Progress'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                {iconMapping[text]}
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItemButton>
@@ -53,11 +65,11 @@ const Home = () => {
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                {['New Lesson', 'New Activity', 'New Quiz'].map((text, index) => (
                     <ListItem key={text} disablePadding> 
                         <ListItemButton>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                {iconMapping[text]}
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItemButton>
