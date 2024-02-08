@@ -40,7 +40,7 @@ const Home = () => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-    
+
         setState({ ...state, [anchor]: open });
     };
 
@@ -78,7 +78,7 @@ const Home = () => {
             </List>
         </Box>
     );
-    
+
     return (
         <div>
             <Box sx={{ flexGrow: 1}}>
