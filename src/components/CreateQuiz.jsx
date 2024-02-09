@@ -11,11 +11,16 @@ const CreateQuiz = ({quizzes}) => {
     const [formValues, setFormValues] = useState({
         title: '',
         description: '',
+        questions: [{content: '', correctAnswer: '', possibleAnswers: ['']}]
     })
 
     const handleChange = (e) => [
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
     ]
+
+    const handleQuestionChange = (e) => {
+        
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,6 +65,15 @@ const CreateQuiz = ({quizzes}) => {
                     value={formValues.description}
                     required
                     />
+                <label htmlFor='questions'>Questions:</label>
+                    <input
+                    onChange={handleChange}
+                    name="questions"
+                    type="text"
+                    placeholder="Quiz questions"
+                    value={formValues.questions}
+                    required
+                    />
                 <button type='submit'>Create Quiz</button>
             </form>
         </div>
@@ -69,6 +83,7 @@ const CreateQuiz = ({quizzes}) => {
                 <div key={quizzes.id}>
                     <h2>Title: {quiz.title}</h2>
                     <h3>Description: {quiz.description}</h3>
+                    <h3>Questions: {quiz.questions}</h3>
                     <button onClick={() => handleUpdate(quiz._id)}>Update</button>
                     <button onClick={() => handleDelete(quiz._id)}>Delete</button>
                 </div>

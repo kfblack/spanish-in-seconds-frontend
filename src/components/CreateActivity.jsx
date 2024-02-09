@@ -8,8 +8,10 @@ const CreateActivity = ({activities}) => {
     let navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
-        questionType: '',
+        description: '',
         content: '',
+        correctAnswer: '',
+        activityType: '',
     })
 
     const handleChange = (e) => [
@@ -18,7 +20,7 @@ const CreateActivity = ({activities}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let newActivity = {...formValues, activityAnswer: []}
+        let newActivity = {...formValues}
         await Client.post('/activities', newActivity)
         navigate('/createActivity')
     }
@@ -35,19 +37,34 @@ const CreateActivity = ({activities}) => {
         navigate(`/update-activity/${activityId}`)
     }
 
+    function getPlaceholderText(activityType) {
+        switch (activityType) {
+            case 'true-false':
+                return "Enter 'true' or 'false'";
+            case 'multiple-choice':
+                return "Enter the correct option";
+            case 'short-answer':
+                return "Enter the correct answer";
+            case 'fill-in-the-blank':
+                return "Enter the word(s) for the blank";
+            default:
+                return "Correct Answer";
+        }
+    }
+
     return (
         <div>
         <div>
             <NavBar />
             <h1>Create an Activity:</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor='questionType'>Question Type:</label>
+                <label htmlFor='description'>Description:</label>
                     <input
                     onChange={handleChange}
-                    name="questionType"
+                    name="description"
                     type="text"
-                    placeholder="Type of question"
-                    value={formValues.questionType}
+                    placeholder="Description of activity"
+                    value={formValues.description}
                     required
                     />
                 <label htmlFor='content'>Content:</label>
@@ -59,6 +76,28 @@ const CreateActivity = ({activities}) => {
                     value={formValues.content}
                     required
                     />
+                <label htmlFor='correctAnswer'>Answer:</label>
+                    <input
+                    onChange={handleChange}
+                    name="correctAnswer"
+                    type="text"
+                    placeholder={getPlaceholderText(formValues.activityType)}
+                    value={formValues.correctAnswer}
+                    required
+                    />  
+                <label htmlFor='activityType'>Activity Type:</label>
+                    <select
+                    onChange={handleChange}
+                    name="activityType"
+                    value={formValues.activityType}
+                    required
+                    >
+                        <option value=''>Select Type</option>
+                        <option value='true-false'>True or False</option>
+                        <option value='short-answer'>Short Answer</option>
+                        <option value='fill-in-the-blank'>Fill in the Blank</option>
+                        <option value='multiple-choice'>Multiple Choice</option>
+                    </select>
                 <button type='submit'>Create Activity</button>
             </form>
         </div>
@@ -66,7 +105,8 @@ const CreateActivity = ({activities}) => {
             <h1>Activities</h1>
             {activities.map(activity => (
                 <div key={activities.id}>
-                    <h2>Question Type: {activity.questionType}</h2>
+                    <h2>Description: {activity.description}</h2>
+                    <h3>Activity Type: {activity.activityType}</h3>
                     <h3>Activity: {activity.content}</h3>
                     <button onClick={() => handleUpdate(activity._id)}>Update</button>
                     <button onClick={() => handleDelete(activity._id)}>Delete</button>
