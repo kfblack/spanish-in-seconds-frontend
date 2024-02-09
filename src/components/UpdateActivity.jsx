@@ -18,10 +18,8 @@ const UpdateActivity = () => {
                 const res = await Client.get(`/activities/${activityId}`)
                 const activity = res.data;
                 setFormValues({
-                    title: activity.title,
+                    questionType: activity.questionType,
                     content: activity.content,
-                    description: activity.description,
-                    level: activity.level
                 })
             } catch (err) {
                 console.log(err);
@@ -50,7 +48,7 @@ const UpdateActivity = () => {
             <NavBar />
             <h1>Update Activity:</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor='level'>Question Type:</label>
+                <label htmlFor='questionType'>Question Type:</label>
                     <input
                     onChange={handleChange}
                     name="questionType"

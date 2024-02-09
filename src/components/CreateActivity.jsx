@@ -41,7 +41,7 @@ const CreateActivity = ({activities}) => {
             <NavBar />
             <h1>Create an Activity:</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor='level'>Question Type:</label>
+                <label htmlFor='questionType'>Question Type:</label>
                     <input
                     onChange={handleChange}
                     name="questionType"

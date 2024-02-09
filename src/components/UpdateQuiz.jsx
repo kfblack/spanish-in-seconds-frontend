@@ -1,17 +1,32 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
 
+const UpdateQuiz = () => {
 
-const CreateQuiz = ({quizzes}) => {
-
-    let navigate = useNavigate();
+    let { quizId } = useParams();
 
     const [formValues, setFormValues] = useState({
         title: '',
         description: '',
     })
+
+    useEffect(() => {
+        const getQuiz = async () => {
+            try {
+                const res = await Client.get(`/quizzes/${quizId}`)
+                const quiz = res.data;
+                setFormValues({
+                    title: quiz.title,
+                    description: quiz.description,
+                })
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getQuiz();
+    }, [])
 
     const handleChange = (e) => [
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
@@ -19,28 +34,19 @@ const CreateQuiz = ({quizzes}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let newQuiz = {...formValues, questions: []}
-        await Client.post('/quizzes', newQuiz)
-        navigate('/createQuiz')
-    }
-
-    const handleDelete = async (quizId) => {
         try {
-            await Client.delete(`/quizzes/${quizId}`)
+            await Client.put(`/quizzes/${quizId}`, formValues)
         } catch (err) {
-            console.log(err);
+            console.log(err)
         }
     }
 
-    const handleUpdate = async (quizId) => {
-        navigate(`/update-quiz/${quizId}`)
-    }
 
     return (
         <div>
         <div>
             <NavBar />
-            <h1>Create a Quiz:</h1>
+            <h1>Update Quiz:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='title'>Title:</label>
                     <input
@@ -60,22 +66,11 @@ const CreateQuiz = ({quizzes}) => {
                     value={formValues.description}
                     required
                     />
-                <button type='submit'>Create Quiz</button>
+                <button type='submit'>Update Quiz</button>
             </form>
-        </div>
-        <div>
-            <h1>Quizzes</h1>
-            {quizzes.map(quiz => (
-                <div key={quizzes.id}>
-                    <h2>Title: {quiz.title}</h2>
-                    <h3>Description: {quiz.description}</h3>
-                    <button onClick={() => handleUpdate(quiz._id)}>Update</button>
-                    <button onClick={() => handleDelete(quiz._id)}>Delete</button>
-                </div>
-            ))}
         </div>
         </div>
     )
 }
 
-export default CreateQuiz
+export default UpdateQuiz

@@ -12,6 +12,7 @@ import CreateQuiz from './components/CreateQuiz'
 import Client from './services/api.js'
 import UpdateLesson from './components/UpdateLesson'
 import UpdateActivity from './components/UpdateActivity'
+import UpdateQuiz from './components/UpdateQuiz'
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
           <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes}/>}/>
           <Route path='/update-lesson/:lessonId' element={<UpdateLesson />} />
           <Route path='/update-activity/:activityId' element={<UpdateActivity />} />
+          <Route path='/update-quiz/:quizId' element={<UpdateQuiz />} />
         </Routes>
       </main>
       <footer>
