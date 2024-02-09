@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import Sidebar from './Sidebar'
+import { Link as RouterLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -36,6 +36,15 @@ const Home = () => {
         "New Quiz": <QuizIcon />
     }
 
+    const pathMapping = {
+        "Home": '/',
+        "Lessons": '/lessons',
+        "My Progress": '/progress',
+        "New Lesson": '/create',
+        "New Activity": '/createActivity',
+        "New Quiz": '/createQuiz'
+    }
+
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -54,7 +63,7 @@ const Home = () => {
             <List>
                 {['Home', 'Lessons', 'My Progress'].map((text, index) => (
                     <ListItem key={text} disablePadding>
-                        <ListItemButton>
+                        <ListItemButton component={RouterLink} to={pathMapping[text]}>
                             <ListItemIcon>
                                 {iconMapping[text]}
                             </ListItemIcon>
@@ -67,7 +76,7 @@ const Home = () => {
             <List>
                 {['New Lesson', 'New Activity', 'New Quiz'].map((text, index) => (
                     <ListItem key={text} disablePadding> 
-                        <ListItemButton>
+                        <ListItemButton component={RouterLink} to={pathMapping[text]}>
                             <ListItemIcon>
                                 {iconMapping[text]}
                             </ListItemIcon>
@@ -125,7 +134,6 @@ const Home = () => {
                 <li>Level 4 = A confident and prepared student, with good background in Spanish fundamentals, ready to take on a challenge!</li>
                 <li>Level 5 = For someone with comprehensive background in the language, ready to reach conversational ability!</li>
             </ul>
-            <Sidebar /> 
         </div>
     )
 }

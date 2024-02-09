@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
-import Sidebar from './Sidebar'
 
 const CreateQuiz = ({quizzes}) => {
 
@@ -58,7 +57,6 @@ const CreateQuiz = ({quizzes}) => {
                 </div>
             ))}
         </div>
-        <Sidebar />
         </div>
     )
 }

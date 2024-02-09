@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 
-const CreateLesson = () => {
+const UpdateLesson = () => {
 
-    let navigate = useNavigate();
+    const { lessonId } = useParams();
 
     const [formValues, setFormValues] = useState({
         title: '',
@@ -13,15 +13,35 @@ const CreateLesson = () => {
         level: '',
     })
 
+    useEffect(() => {
+        const getLesson = async () => {
+            try {
+                const res = await Client.get(`/lessons/${lessonId}`)
+                const lesson = res.data;
+                setFormValues({
+                    title: lesson.title,
+                    content: lesson.content,
+                    description: lesson.description,
+                    level: lesson.level
+                })
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getLesson();
+    }, [])
+
     const handleChange = (e) => [
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
     ]
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let newLesson = {...formValues, activities: [], quiz: []}
-        await Client.post('/lessons', newLesson)
-        navigate('/lessons')
+        try {
+            await Client.put(`/lessons/${lessonId}`, formValues)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -64,10 +84,10 @@ const CreateLesson = () => {
                     value={formValues.content}
                     required
                     />
-                <button type='submit'>Create Lesson</button>
+                <button type='submit'>Update Lesson</button>
             </form>
         </div>
     )
 }
 
-export default CreateLesson
+export default UpdateLesson

@@ -10,6 +10,7 @@ import CreateLesson from './components/CreateLesson'
 import CreateActivity from './components/CreateActivity'
 import CreateQuiz from './components/CreateQuiz'
 import Client from './services/api.js'
+import UpdateLesson from './components/UpdateLesson'
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
           <Route path='/create' element={<CreateLesson />}/>
           <Route path='/createActivity' element={<CreateActivity activities={activities}/>}/>
           <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes}/>}/>
+          <Route path='/update-lesson/:lessonId' element={<UpdateLesson />} />
         </Routes>
       </main>
       <footer>

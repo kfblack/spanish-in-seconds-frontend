@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
-import Sidebar from './Sidebar'
 
 const CreateActivity = ({activities}) => {
 
@@ -58,7 +57,6 @@ const CreateActivity = ({activities}) => {
                 </div>
             ))}
         </div>
-        <Sidebar />
         </div>
     )
 }
