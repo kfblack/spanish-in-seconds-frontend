@@ -13,6 +13,7 @@ import Client from './services/api.js'
 import UpdateLesson from './components/UpdateLesson'
 import UpdateActivity from './components/UpdateActivity'
 import UpdateQuiz from './components/UpdateQuiz'
+import ActivitySelector from './components/ActivitySelector'
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
   useEffect(() => {
     const getLessons = async () => {
       let res = await Client.get('/lessons')
+      console.log(res.data)
       setLessons(res.data)
     }
     getLessons();
@@ -68,7 +70,7 @@ function App() {
           <Route path='/' element={<Home />}/>
           <Route path='/register' element={<Register />}/>
           <Route path='/signin' element={<Signin setUser={setUser}/>} />
-          <Route path='/lessons' element={<Lesson lessons={lessons}/>} />
+          <Route path='/lessons' element={<Lesson lessons={lessons} activities={activities}/>} />
           <Route path='/progress' element={<Progress />} />
           <Route path='/create' element={<CreateLesson />}/>
           <Route path='/createActivity' element={<CreateActivity activities={activities}/>}/>
@@ -76,6 +78,7 @@ function App() {
           <Route path='/update-lesson/:lessonId' element={<UpdateLesson />} />
           <Route path='/update-activity/:activityId' element={<UpdateActivity />} />
           <Route path='/update-quiz/:quizId' element={<UpdateQuiz />} />
+          <Route path='/select-activity' element={<ActivitySelector activities={activities}/>} />
         </Routes>
       </main>
       <footer>
