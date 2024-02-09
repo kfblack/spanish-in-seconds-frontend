@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { RegisterUser } from '../services/Auth'
 import { useNavigate } from 'react-router-dom'
+import NavBar from './NavBar'
 
 const Register = () => {
 
@@ -34,6 +35,8 @@ const Register = () => {
     }
 
     return (
+        <div>
+            <NavBar />
         <div className="signin col">
             <div className="card-overlay centered">
                 <form className="col" onSubmit={handleSubmit}>
@@ -99,6 +102,7 @@ const Register = () => {
                     </button>
                 </form>
             </div>
+        </div>
         </div>
     )
 }

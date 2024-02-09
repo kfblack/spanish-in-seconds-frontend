@@ -1,16 +1,34 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
 
-const CreateActivity = ({activities}) => {
+const UpdateActivity = () => {
 
-    let navigate = useNavigate();
+    let { activityId } = useParams();
 
     const [formValues, setFormValues] = useState({
         questionType: '',
         content: '',
     })
+
+    useEffect(() => {
+        const getActivity = async () => {
+            try {
+                const res = await Client.get(`/activities/${activityId}`)
+                const activity = res.data;
+                setFormValues({
+                    title: activity.title,
+                    content: activity.content,
+                    description: activity.description,
+                    level: activity.level
+                })
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getActivity();
+    }, [])
 
     const handleChange = (e) => [
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
@@ -18,28 +36,19 @@ const CreateActivity = ({activities}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let newActivity = {...formValues, activityAnswer: []}
-        await Client.post('/activities', newActivity)
-        navigate('/createActivity')
-    }
-
-    const handleDelete = async (activityId) => {
         try {
-            await Client.delete(`/activities/${activityId}`)
+            await Client.put(`/activities/${activityId}`, formValues)
         } catch (err) {
-            console.log(err);
+            console.log(err)
         }
     }
 
-    const handleUpdate = async (activityId) => {
-        navigate(`/update-activity/${activityId}`)
-    }
 
     return (
         <div>
         <div>
             <NavBar />
-            <h1>Create an Activity:</h1>
+            <h1>Update Activity:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='level'>Question Type:</label>
                     <input
@@ -59,22 +68,11 @@ const CreateActivity = ({activities}) => {
                     value={formValues.content}
                     required
                     />
-                <button type='submit'>Create Activity</button>
+                <button type='submit'>Update Activity</button>
             </form>
-        </div>
-        <div>
-            <h1>Activities</h1>
-            {activities.map(activity => (
-                <div key={activities.id}>
-                    <h2>Question Type: {activity.questionType}</h2>
-                    <h3>Activity: {activity.content}</h3>
-                    <button onClick={() => handleUpdate(activity._id)}>Update</button>
-                    <button onClick={() => handleDelete(activity._id)}>Delete</button>
-                </div>
-            ))}
         </div>
         </div>
     )
 }
 
-export default CreateActivity
+export default UpdateActivity

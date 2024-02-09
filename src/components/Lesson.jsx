@@ -1,5 +1,6 @@
 import Client from '../services/api.js'
 import { useNavigate } from 'react-router-dom'
+import NavBar from './NavBar'
 
 const Lesson = ({lessons}) => {
 
@@ -20,6 +21,7 @@ const Lesson = ({lessons}) => {
 
     return (
         <div>
+            <NavBar />
             <h1>Lessons</h1>
             {lessons.map(lesson => (
                 <div key={lesson._id}> 

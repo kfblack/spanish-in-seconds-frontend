@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
+import NavBar from './NavBar'
+
 
 const CreateLesson = () => {
 
@@ -26,6 +28,7 @@ const CreateLesson = () => {
 
     return (
         <div>
+            <NavBar />
             <h1>Create a Lesson:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='level'>Level:</label>
