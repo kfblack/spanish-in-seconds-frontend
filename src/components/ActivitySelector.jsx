@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Box, Card, CardContent, Checkbox, FormControlLabel, Button, Typography } from '@mui/material';
+
 
 
 const ActivitySelector = ({ activities, onSave }) => {
@@ -14,22 +16,30 @@ const ActivitySelector = ({ activities, onSave }) => {
     };
 
     return (
-        <div>
-            <h2>Select Activities</h2>
+        <Box sx={{ mt: 2 }}>
+            <Typography variant="h5" gutterBottom>
+                Select Activities
+            </Typography>
             {activities.map((activity) => (
-                <div key={activity._id}>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={selectedActivities.includes(activity._id)}
-                            onChange={() => toggleActivity(activity._id)}
+                <Card key={activity._id} sx={{ mb: 1 }}>
+                    <CardContent>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedActivities.includes(activity._id)}
+                                    onChange={() => toggleActivity(activity._id)}
+                                    name={activity.content}
+                                />
+                            }
+                            label={activity.content}
                         />
-                        {activity.content}
-                    </label>
-                </div>
+                    </CardContent>
+                </Card>
             ))}
-            <button onClick={() => onSave(selectedActivities)}>Save Activities</button>
-        </div>
+            <Button variant="contained" color="primary" onClick={() => onSave(selectedActivities)} sx={{ mt: 2 }}>
+                Save Activities
+            </Button>
+        </Box>
     );
 };
 

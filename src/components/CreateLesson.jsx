@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
+import { Container, Typography, TextField, Button, Box } from '@mui/material';
+
 
 
 const CreateLesson = () => {
@@ -27,49 +29,72 @@ const CreateLesson = () => {
     }
 
     return (
-        <div>
-            <NavBar />
-            <h1>Create a Lesson:</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='level'>Level:</label>
-                    <input
-                    onChange={handleChange}
+    <div>
+        <NavBar />
+        <Container>
+            <Typography variant="h4" component="h1" gutterBottom>
+                Create a Lesson:
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="level"
+                    label="Level"
                     name="level"
                     type="number"
                     placeholder="Difficulty level"
                     value={formValues.level}
-                    required
-                    />
-                <label htmlFor='title'>Title:</label>
-                    <input
                     onChange={handleChange}
+                    autoFocus
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="title"
+                    label="Title"
                     name="title"
-                    type="text"
                     placeholder="Lesson Title"
                     value={formValues.title}
-                    required
-                    />
-                <label htmlFor='description'>Description:</label>
-                    <input
                     onChange={handleChange}
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="description"
+                    label="Description"
                     name="description"
-                    type="text"
                     placeholder="Lesson Description"
                     value={formValues.description}
-                    required
-                    />
-                <label htmlFor='content'>Content:</label>
-                    <input
                     onChange={handleChange}
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="content"
+                    label="Content"
                     name="content"
-                    type="text"
                     placeholder="Lesson Content"
                     value={formValues.content}
-                    required
-                    />
-                <button type='submit'>Create Lesson</button>
-            </form>
-        </div>
+                    multiline
+                    rows={4}
+                    onChange={handleChange}
+                />
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Create Lesson
+                </Button>
+            </Box>
+        </Container>
+    </div>
     )
 }
 

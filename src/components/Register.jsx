@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { RegisterUser } from '../services/Auth'
 import { useNavigate } from 'react-router-dom'
 import NavBar from './NavBar'
+import { Container, Typography, TextField, Button, Box } from '@mui/material';
+
 
 const Register = () => {
 
@@ -37,72 +39,87 @@ const Register = () => {
     return (
         <div>
             <NavBar />
-        <div className="signin col">
-            <div className="card-overlay centered">
-                <form className="col" onSubmit={handleSubmit}>
-                    <div className="input-wrapper">
-                        <label htmlFor="name">Name:</label>
-                            <input
-                                onChange={handleChange}
-                                name="name"
-                                type="text"
-                                placeholder="John Smith"
-                                value={formValues.name}
-                                required
-                            />
-                    </div>
-                    <div className='input-wrapper'>
-                        <label htmlFor='avatar'>Avatar:</label>
-                        <input 
-                            onChange={handleChange}
-                            name='avatar'
-                            type='text'
-                            placeholder='Optional Image URL'
-                            value={formValues.avatar}
-                        />
-                    </div>
-                    <div className="input-wrapper">
-                        <label htmlFor="email">Email:</label>
-                            <input
-                                onChange={handleChange}
-                                name="email"
-                                type="email"
-                                placeholder="example@example.com"
-                                value={formValues.email}
-                                required
-                            />
-                    </div>
-                    <div className="input-wrapper">
-                        <label htmlFor="password">Password:</label>
-                            <input
-                                onChange={handleChange}
-                                type="password"
-                                name="password"
-                                value={formValues.password}
-                                required
-                            />
-                    </div>
-                    <div className="input-wrapper">
-                        <label htmlFor="confirmPassword">Confirm Password:</label>
-                            <input
-                                onChange={handleChange}
-                                type="password"
-                                name="confirmPassword"
-                                value={formValues.confirmPassword}
-                                required
-                            />
-                    </div>
-                    <button disabled={
-                    !formValues.email ||
-                    (!formValues.password &&
-                    formValues.confirmPassword === formValues.password)
-                    }
+            <Container>
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Typography component="h1" variant="h5">
+                    Register
+                </Typography>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Name"
+                        name="name"
+                        placeholder="John Smith"
+                        value={formValues.name}
+                        onChange={handleChange}
+                        autoFocus
+                    />
+                    <TextField
+                        margin="normal"
+                        fullWidth
+                        id="avatar"
+                        label="Avatar URL (Optional)"
+                        name="avatar"
+                        placeholder="Optional Image URL"
+                        value={formValues.avatar}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        type="email"
+                        placeholder="example@example.com"
+                        value={formValues.email}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        value={formValues.password}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        type="password"
+                        id="confirmPassword"
+                        value={formValues.confirmPassword}
+                        onChange={handleChange}
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        disabled={!formValues.email || formValues.password !== formValues.confirmPassword}
                     >
-                    Sign In
-                    </button>
-                </form>
-            </div>
-        </div>
+                        Register
+                    </Button>
+                </Box>
+            </Box>
+        </Container>
         </div>
     )
 }

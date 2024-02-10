@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
+import { Container, Typography, TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Card, CardContent, CardActions } from '@mui/material';
+
 
 const CreateActivity = ({activities}) => {
 
@@ -54,67 +56,86 @@ const CreateActivity = ({activities}) => {
 
     return (
         <div>
-        <div>
-            <NavBar />
-            <h1>Create an Activity:</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='description'>Description:</label>
-                    <input
-                    onChange={handleChange}
+        <NavBar />
+        <Container>
+            <Typography variant="h4" component="h1" gutterBottom>
+                Create an Activity:
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="description"
+                    label="Description"
                     name="description"
-                    type="text"
                     placeholder="Description of activity"
                     value={formValues.description}
-                    required
-                    />
-                <label htmlFor='content'>Content:</label>
-                    <input
                     onChange={handleChange}
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="content"
+                    label="Content"
                     name="content"
-                    type="text"
                     placeholder="Activity Content"
                     value={formValues.content}
-                    required
-                    />
-                <label htmlFor='correctAnswer'>Answer:</label>
-                    <input
                     onChange={handleChange}
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="correctAnswer"
+                    label="Answer"
                     name="correctAnswer"
-                    type="text"
                     placeholder={getPlaceholderText(formValues.activityType)}
                     value={formValues.correctAnswer}
-                    required
-                    />  
-                <label htmlFor='activityType'>Activity Type:</label>
-                    <select
                     onChange={handleChange}
-                    name="activityType"
-                    value={formValues.activityType}
-                    required
+                />
+                <FormControl fullWidth margin="normal">
+                    <InputLabel id="activityType-label">Activity Type</InputLabel>
+                    <Select
+                        labelId="activityType-label"
+                        id="activityType"
+                        value={formValues.activityType}
+                        label="Activity Type"
+                        name="activityType"
+                        onChange={handleChange}
+                        required
                     >
-                        <option value=''>Select Type</option>
-                        <option value='true-false'>True or False</option>
-                        <option value='short-answer'>Short Answer</option>
-                        <option value='fill-in-the-blank'>Fill in the Blank</option>
-                        <option value='multiple-choice'>Multiple Choice</option>
-                    </select>
-                <button type='submit'>Create Activity</button>
-            </form>
-        </div>
-        <div>
-            <h1>Activities</h1>
+                        <MenuItem value=''>Select Type</MenuItem>
+                        <MenuItem value='true-false'>True or False</MenuItem>
+                        <MenuItem value='short-answer'>Short Answer</MenuItem>
+                        <MenuItem value='fill-in-the-blank'>Fill in the Blank</MenuItem>
+                        <MenuItem value='multiple-choice'>Multiple Choice</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    Create Activity
+                </Button>
+            </Box>
+            <Typography variant="h5" component="h2" gutterBottom sx={{ mt: 4 }}>
+                Activities
+            </Typography>
             {activities.map(activity => (
-                <div key={activities.id}>
-                    <h2>Description: {activity.description}</h2>
-                    <h3>Activity Type: {activity.activityType}</h3>
-                    <h3>Activity: {activity.content}</h3>
-                    <button onClick={() => handleUpdate(activity._id)}>Update</button>
-                    <button onClick={() => handleDelete(activity._id)}>Delete</button>
-                </div>
+                <Card sx={{ mt: 2, mb: 2 }}>
+                <CardContent>
+                    <Typography variant="h6">Description: {activity.description}</Typography>
+                    <Typography variant="subtitle1">Activity Type: {activity.activityType}</Typography>
+                    <Typography variant="body1">Activity: {activity.content}</Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small" onClick={() => handleUpdate(activity._id)}>Update</Button>
+                    <Button size="small" color="error" onClick={() => handleDelete(activity._id)}>Delete</Button>
+                </CardActions>
+            </Card>
             ))}
-        </div>
-        </div>
-    )
-}
+        </Container>
+    </div>
+);
+};
 
 export default CreateActivity

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { SignInUser } from '../services/Auth'
 import { useNavigate } from 'react-router-dom'
 import NavBar from './NavBar'
+import { Container, Typography, TextField, Button, Box } from '@mui/material';
+
 
 const SignIn = (props) => {
 
@@ -24,36 +26,55 @@ const SignIn = (props) => {
     return (
         <div>
         <NavBar />
-        <div className="signin col">
-            <div className="card-overlay centered">
-                <form className="col" onSubmit={handleSubmit}>
-                    <div className="input-wrapper">
-                        <label htmlFor="email">Email</label>
-                            <input
-                                onChange={handleChange}
-                                name="email"
-                                type="email"
-                                placeholder="example@example.com"
-                                value={formValues.email}
-                                required
-                            />
-                    </div>
-                    <div className="input-wrapper">
-                        <label htmlFor="password">Password</label>
-                            <input
-                                onChange={handleChange}
-                                type="password"
-                                name="password"
-                                value={formValues.password}
-                                required
-                            />
-                    </div>
-                    <button disabled={!formValues.email || !formValues.password}>
+        <Container>
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Typography component="h1" variant="h5">
                     Sign In
-                    </button>
-                </form>
-            </div>
-        </div>
+                </Typography>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                        value={formValues.email}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        value={formValues.password}
+                        onChange={handleChange}
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        disabled={!formValues.email || !formValues.password}
+                    >
+                        Sign In
+                    </Button>
+                </Box>
+            </Box>
+        </Container>
         </div>
     )
 }

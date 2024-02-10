@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Box, Card, CardContent, Checkbox, FormControlLabel, Button, Typography } from '@mui/material';
+
 
 
 const QuizSelector = ({ quizzes, onSave }) => {
@@ -14,22 +16,30 @@ const QuizSelector = ({ quizzes, onSave }) => {
     };
 
     return (
-        <div>
-            <h2>Select Quizzes</h2>
+        <Box sx={{ mt: 2 }}>
+            <Typography variant="h5" gutterBottom>
+                Select Quizzes
+            </Typography>
             {quizzes.map((quiz) => (
-                <div key={quiz._id}>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={selectedQuizzes.includes(quiz._id)}
-                            onChange={() => toggleQuiz(quiz._id)}
+                <Card key={quiz._id} sx={{ mb: 1 }}>
+                    <CardContent>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedQuizzes.includes(quiz._id)}
+                                    onChange={() => toggleQuiz(quiz._id)}
+                                    name={quiz.description}
+                                />
+                            }
+                            label={quiz.description}
                         />
-                        {quiz.description}
-                    </label>
-                </div>
+                    </CardContent>
+                </Card>
             ))}
-            <button onClick={() => onSave(selectedQuizzes)}>Save Quizzes</button>
-        </div>
+            <Button variant="contained" color="primary" onClick={() => onSave(selectedQuizzes)} sx={{ mt: 2 }}>
+                Save Quizzes
+            </Button>
+        </Box>
     );
 };
 
