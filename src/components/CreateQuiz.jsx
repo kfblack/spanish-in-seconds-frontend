@@ -20,6 +20,16 @@ const CreateQuiz = ({quizzes}) => {
         }]
     })
 
+    const createQuizQuestion = async (questionData) => {
+        try {
+            const response = await Client.post('/quizQuestion', questionData)
+            const question = response.data;
+            return question._id; 
+        } catch (error) {
+            console.error("Error creating quiz question:", error);
+        }
+    };
+
     const handleChange = (e) => {
         const {name, value} = e.target
         setQuiz(quiz => ({...quiz, [name]: value}))
@@ -86,8 +96,29 @@ const CreateQuiz = ({quizzes}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await Client.post('/quizzes', quiz)
-        navigate('/createQuiz')
+
+    const questionIds = await Promise.all(quiz.questions.map(async (question) => {
+        return await createQuizQuestion({
+            content: question.content,
+            correctAnswer: question.correctAnswer,
+            possibleAnswers: question.possibleAnswers,
+        });
+    }));
+
+    const validQuestionIds = questionIds.filter(id => id !== undefined);
+
+    const quizData = {
+        title: quiz.title,
+        description: quiz.description,
+        questions: validQuestionIds,
+    };
+
+        try {
+            const response = await Client.post('/quizzes', quizData)
+            navigate('/createQuiz')
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const handleDelete = async (quizId) => {
@@ -178,7 +209,7 @@ const CreateQuiz = ({quizzes}) => {
                             <div>
                                 <Typography variant="body1">Questions: {question.content}</Typography>
                                 <Typography variant="body2">Answers</Typography>
-                                    {question.possibleAnswers.map((answer, aIndex) => (
+                                    {question.possibleAnswers?.map((answer, aIndex) => (
                                         <li>
                                             <Button variant='text' onClick={() => handleAnswerClick(qIndex, aIndex)}>{answer}</Button>
                                         </li>
