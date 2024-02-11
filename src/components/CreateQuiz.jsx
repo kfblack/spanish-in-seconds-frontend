@@ -113,8 +113,13 @@ const CreateQuiz = ({quizzes}) => {
         questions: validQuestionIds,
     };
 
+    console.log("Submitting quiz with data:", quizData);
+
+
         try {
             const response = await Client.post('/quizzes', quizData)
+            console.log("Quiz created with questions:", response.data); // Verify final structure
+
             navigate('/createQuiz')
         } catch (err) {
             console.log(err);
