@@ -114,7 +114,17 @@ const Lesson = ({lessons, activities, quizzes}) => {
                                         <CardContent>
                                             <Typography variant="h6">{quiz.title}</Typography>
                                             <Typography variant="body1">{quiz.description}</Typography>
-                                            <Typography variant="body2">{quiz.questions}</Typography>
+                                            {quiz.questions?.map((question) => (
+                                                <div>
+                                                    <Typography variant="body1">Questions: {question.content}</Typography>
+                                                    <Typography variant="body2">Answers</Typography>
+                                                        {question.possibleAnswers?.map((answer) => (
+                                                            <li>
+                                                                <Button variant='text'>{answer}</Button>
+                                                            </li>
+                                                        ))}
+                                                </div>
+                                            ))}
                                         </CardContent>
                                     </Card>
                                 ))}
