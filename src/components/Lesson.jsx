@@ -19,6 +19,7 @@ const Lesson = ({lessons, activities, quizzes}) => {
     const [showActivitySelector, setShowActivitySelector] = useState(false);
     const [showQuizSelector, setShowQuizSelector] = useState(false);
     const [currentLessonId, setCurrentLessonId] = useState(null);
+    const [showActivityAnswer, setShowActivityAnswer] = useState({});
 
     const handleAddActivityClick = (lessonId) => {
         setCurrentLessonId(lessonId);
@@ -64,6 +65,12 @@ const Lesson = ({lessons, activities, quizzes}) => {
         navigate(`/update-lesson/${lessonId}`)
     }
 
+    const toggleActivityAnswer = (activityId) => {
+        setShowActivityAnswer(answer => ({
+            ...answer, [activityId]: !answer[activityId]
+        }))
+    }
+
     return (
         <div>
             <NavBar />
@@ -94,11 +101,16 @@ const Lesson = ({lessons, activities, quizzes}) => {
                                 <Typography variant='h6'>Activities</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                {lesson.activities.map(activity => (
+                                {lesson.activities?.map(activity => (
                                     <Card key={activity._id} variant="outlined" sx={{ marginBottom: '10px' }}>
                                         <CardContent>
-                                            <Typography variant="h6">{activity.questionType}</Typography>
-                                            <Typography variant="body2">{activity.content}</Typography>
+                                            <Typography variant="body1">Description: {activity.description}</Typography>
+                                            <Typography variant="body3">Activity type: {activity.activityType}</Typography>
+                                            <Typography variant='body2'>Activity: {activity.content}</Typography>
+                                            <Button onClick={() => toggleActivityAnswer(activity._id)}>Show Answer</Button>
+                                            {showActivityAnswer[activity._id] && (
+                                                <Typography variant="h6">Correct Answer: {activity.correctAnswer}</Typography>
+                                            )}
                                         </CardContent>
                                     </Card>
                                 ))}
@@ -109,15 +121,15 @@ const Lesson = ({lessons, activities, quizzes}) => {
                                 <Typography variant='h6'>Quizzes</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                {lesson.quiz.map(quiz => (
+                                {lesson.quiz?.map(quiz => (
                                     <Card key={quiz._id} variant="outlined" sx={{ marginBottom: '10px' }}>
                                         <CardContent>
-                                            <Typography variant="h6">{quiz.title}</Typography>
-                                            <Typography variant="body1">{quiz.description}</Typography>
+                                            <Typography variant="h6">Title: {quiz.title}</Typography>
+                                            <Typography variant="body1">Description: {quiz.description}</Typography>
                                             {quiz.questions?.map((question) => (
                                                 <div>
                                                     <Typography variant="body1">Questions: {question.content}</Typography>
-                                                    <Typography variant="body2">Answers</Typography>
+                                                    <Typography variant="body2">Answer Choices:</Typography>
                                                         {question.possibleAnswers?.map((answer) => (
                                                             <li>
                                                                 <Button variant='text'>{answer}</Button>
