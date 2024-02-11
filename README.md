@@ -48,5 +48,5 @@ This project is a full-stack MERN application, on learning the basics of Spanish
 ***
 #### **_Credits_**
 
-##### Images: []() 
-##### Code Help: []()
+##### Images: [Spanish Dance](https://www.utrgv.edu/claa/divisions-and-disciplines/dance/flamenco/index.htm) | [Spanish Food](https://housinganywhere.com/Spain/traditional-unique-food-in-spain) | [Spanish Flag](https://en.wikipedia.org/wiki/Flag_of_Spain) | [Spanish Landmark](https://meetmeindepartures.com/landmarks-in-spain-spanish-bucket-list/) | [Spanish Art](https://www.singulart.com/en/blog/2023/09/28/famous-spanish-artists/)
+##### Code Help: [Material UI Docs](https://mui.com/material-ui/getting-started/)

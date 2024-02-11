@@ -36,7 +36,7 @@ const SignIn = (props) => {
                 }}
             >
                 <Typography component="h1" variant="h5">
-                    Sign In
+                    Log In
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <TextField

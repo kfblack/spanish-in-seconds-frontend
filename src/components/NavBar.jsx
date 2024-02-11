@@ -116,8 +116,8 @@ const NavBar = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             Spanish in Seconds
                         </Typography>
-                        <Button color='inherit'><Link to='/register'>Sign Up</Link></Button>
-                        <Button color='inherit'><Link to='/signin'>Log In</Link></Button>
+                        <Button component={Link} to='/register' color='inherit'>Sign Up</Button>
+                        <Button component={Link} to='/signin' color='inherit'>Log In</Button>
                     </ToolBar>
                 </AppBar>
             </Box>
