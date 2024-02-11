@@ -114,7 +114,9 @@ const NavBar = () => {
                         </div>
                         </IconButton>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                             Spanish in Seconds
+                        </Link>
                         </Typography>
                         <Button component={Link} to='/register' color='inherit'>Sign Up</Button>
                         <Button component={Link} to='/signin' color='inherit'>Log In</Button>

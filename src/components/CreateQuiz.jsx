@@ -76,7 +76,7 @@ const CreateQuiz = ({quizzes}) => {
                     required
                     fullWidth
                     id="questions"
-                    label="Questions (comma-separated)"
+                    label="Questions"
                     name="questions"
                     placeholder="Quiz questions"
                     value={formValues.questions}

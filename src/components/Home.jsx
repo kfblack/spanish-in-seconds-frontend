@@ -24,7 +24,7 @@ return (
                 Welcome to your guide to learning Spanish quickly for your next big trip!
             </Typography>
             <Typography variant="body1" paragraph>
-                Whether you are completely new, or took 2 classes in High School and cheated your way through, we aim to get you proficient in no time!
+                Whether you are completely new, or took two classes in High School and cheated your way through, we aim to get you proficient in no time!
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
