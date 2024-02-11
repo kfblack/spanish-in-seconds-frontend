@@ -3,31 +3,90 @@ import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
 import { Container, Typography, TextField, Button, Box, Card, CardContent, CardActions } from '@mui/material';
-
-
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const CreateQuiz = ({quizzes}) => {
 
     let navigate = useNavigate();
 
-    const [formValues, setFormValues] = useState({
+    const [quiz, setQuiz] = useState({
         title: '',
         description: '',
-        questions: [{content: '', correctAnswer: '', possibleAnswers: ['']}]
+        questions: [{
+            content: '',
+            correctAnswer: '',
+            possibleAnswers: ['']
+        }]
     })
 
-    const handleChange = (e) => [
-        setFormValues({ ...formValues, [e.target.name]: e.target.value })
-    ]
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setQuiz(quiz => ({...quiz, [name]: value}))
+    }
 
-    const handleQuestionChange = (e) => {
-        
+    const handleQuestionChange = (questionIndex, e) => {
+        const { name, value} = e.target;
+        const updatedQuestions = quiz.questions.map((question, index ) => {
+            if (index === questionIndex) {
+                return {...question, [name]: value}
+            } else {
+                return question
+            }
+        });
+        setQuiz(quiz => ({...quiz, questions: updatedQuestions}))
+    }  
+
+    const handlePossibleAnswerChange = (questionIndex, answerIndex, e) => {
+        const newValue = e.target.value;
+        const updatedQuestions = quiz.questions.map((question, index) => {
+            if (index === questionIndex) {
+                const updateAnswers = question.possibleAnswers.map((answer, idx) => {
+                    if (idx === answerIndex) {
+                        return newValue
+                    } 
+                    return answer;
+                })
+                return {...question, possibleAnswers: updateAnswers}
+            } 
+            return question
+        })
+        setQuiz(quiz => ({...quiz, questions: updatedQuestions}))
+    }
+
+    const addQuestion = () => {
+        const newQuestion = {content: '', correctAnswer: '', possibleAnswers: ['']}
+        setQuiz(quiz => ({...quiz, questions: [...quiz.questions, newQuestion] }))
+    }
+
+    const removeQuestion = (questionIndex) => {
+        const updatedQuestions = quiz.questions.filter((_, index) => index !== questionIndex );
+        setQuiz(quiz => ({...quiz, questions: updatedQuestions}))
+    }
+
+    const addPossibleAnswer = (questionIndex) => {
+        const updateQuestion = quiz.questions.map((question, index) => {
+            if (index === questionIndex) {
+                return {...question, possibleAnswers: [...question.possibleAnswers, '']}
+            }
+            return question
+        })
+        setQuiz(quiz => ({...quiz, questions: updateQuestion}))
+    }   
+
+    const removePossibleAnswer = (questionIndex, answerIndex) => {
+        const updatedQuestions = quiz.questions.map((question, idx) => {
+            if (idx === questionIndex) {
+                return {...question,  possibleAnswers: question.possibleAnswers.filter((_, idx) => idx !== answerIndex)}
+            }
+            return question
+        })
+        setQuiz(quiz => ({...quiz, questions: updatedQuestions}))
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let newQuiz = {...formValues, questions: []}
-        await Client.post('/quizzes', newQuiz)
+        await Client.post('/quizzes', quiz)
         navigate('/createQuiz')
     }
 
@@ -57,7 +116,7 @@ const CreateQuiz = ({quizzes}) => {
                     label="Title"
                     name="title"
                     placeholder="Quiz title"
-                    value={formValues.title}
+                    value={quiz.title}
                     onChange={handleChange}
                 />
                 <TextField
@@ -68,22 +127,45 @@ const CreateQuiz = ({quizzes}) => {
                     label="Description"
                     name="description"
                     placeholder="Quiz description"
-                    value={formValues.description}
+                    value={quiz.description}
                     onChange={handleChange}
                 />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="questions"
-                    label="Questions"
-                    name="questions"
-                    placeholder="Quiz questions"
-                    value={formValues.questions}
-                    onChange={handleChange}
-                    multiline
-                    rows={4}
-                />
+                {quiz.questions.map((question, index) => (
+                    <Box key={index} sx={{ marginBottom: 2 }}>
+                        <TextField
+                            label = "Question"
+                            name = 'content'
+                            margin = 'normal'
+                            value = {question.content}
+                            onChange={(e) => handleQuestionChange(index, e)}
+                            fullWidth
+                        />
+                    {question.possibleAnswers.map((answer, idx) => (
+                        <div>
+                        <TextField 
+                            key = {idx}
+                            label = {`Answer choice ${idx + 1}`}
+                            margin = 'normal'
+                            value = {answer}
+                            onChange={(e) => handlePossibleAnswerChange(index, idx, e)}
+                            fullWidth
+                        />
+                        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => addPossibleAnswer(index)}>
+                            Add Answer Choice
+                        </Button> 
+                        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => removePossibleAnswer(index, idx)}>
+                            Remove Answer Choice
+                        </Button> 
+                        </div>
+                    ))}
+                    <Button variant="outlined" startIcon={<AddIcon />} onClick={() => addQuestion()}>
+                        Add Question
+                    </Button>                    
+                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => removeQuestion(index)}>
+                        Remove Question
+                    </Button>   
+                    </Box>
+                ))}
                 <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>Create Quiz</Button>
             </Box>
             <Typography variant="h5" component="h2" sx={{ mt: 4 }}>Quizzes</Typography>
@@ -92,7 +174,17 @@ const CreateQuiz = ({quizzes}) => {
                     <CardContent>
                         <Typography variant="h6">Title: {quiz.title}</Typography>
                         <Typography variant="body1">Description: {quiz.description}</Typography>
-                        <Typography variant="body2">Questions: {quiz.questions}</Typography>
+                        {quiz.questions.map((question, qIndex) => (
+                            <div>
+                                <Typography variant="body1">Questions: {question.content}</Typography>
+                                <Typography variant="body2">Answers</Typography>
+                                    {question.possibleAnswers.map((answer, aIndex) => (
+                                        <li>
+                                            <Button variant='text' onClick={() => handleAnswerClick(qIndex, aIndex)}>{answer}</Button>
+                                        </li>
+                                    ))}
+                            </div>
+                        ))}
                     </CardContent>
                     <CardActions>
                         <Button size="small" onClick={() => handleUpdate(quiz._id)}>Update</Button>
