@@ -22,6 +22,7 @@ const Lesson = ({lessons, activities, quizzes}) => {
     const [showActivityAnswer, setShowActivityAnswer] = useState({});
     const [activityResponse, setActivityResponse] = useState({})
     const [userInputs, setUserInputs] = useState({})
+    const [userAnswer, setUserAnswer] = useState({})
 
     const handleAddActivityClick = (lessonId) => {
         setCurrentLessonId(lessonId);
@@ -77,6 +78,21 @@ const Lesson = ({lessons, activities, quizzes}) => {
         const isCorrect = activities.find(activity => activity._id === activityId).correctAnswer.toLowerCase() === userResponse.toLowerCase()
         const feedback = isCorrect ? "Correct!": "Incorrect, try again!"
         setActivityResponse(response => ({...response, [activityId]: {...response[activityId], userResponse, isCorrect, feedback}}))
+    }
+
+    const handleAnswer = (quizId, questionId, answer) => {
+        setUserAnswer(prevAnswer => ({...prevAnswer, [quizId]: {...prevAnswer[quizId], [questionId]: answer}}))
+    }
+
+    const handleSubmitQuiz = (quizId) => {
+        const quiz = quizzes.find(quiz => quiz._id === quizId)
+        let score = 0;
+        quiz.questions.forEach(question => {
+            if (userAnswer && userAnswer[quizId][question._id] === question.correctAnswer) {
+                score += 1
+            }
+        })
+        alert(`You scored ${score} out of ${quiz.questions.length} on the quiz!`)
     }
 
 
@@ -171,11 +187,12 @@ const Lesson = ({lessons, activities, quizzes}) => {
                                                     <Typography variant="body2">Answer Choices:</Typography>
                                                         {question.possibleAnswers?.map((answer) => (
                                                             <li>
-                                                                <Button variant='text'>{answer}</Button>
+                                                                <Button variant='text' onClick={() => handleAnswer(quiz._id, question._id, answer)}>{answer}</Button>
                                                             </li>
                                                         ))}
                                                 </div>
                                             ))}
+                                            <Button onClick={() => handleSubmitQuiz(quiz._id)}>Submit Quiz</Button>
                                         </CardContent>
                                     </Card>
                                 ))}
