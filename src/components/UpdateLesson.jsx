@@ -4,7 +4,7 @@ import Client from '../services/api.js'
 import NavBar from './NavBar'
 import {useNavigate} from 'react-router-dom'
 
-const UpdateLesson = () => {
+const UpdateLesson = ({user}) => {
 
     const { lessonId } = useParams();
 
@@ -51,7 +51,7 @@ const UpdateLesson = () => {
 
     return (
         <div>
-            <NavBar />
+            <NavBar user={user}/>
             <h1>Create a Lesson:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='level'>Level:</label>

@@ -6,7 +6,7 @@ import { Container, Typography, TextField, Button, Box } from '@mui/material';
 
 
 
-const CreateLesson = ({setLessons}) => {
+const CreateLesson = ({setLessons, user}) => {
 
     let navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const CreateLesson = ({setLessons}) => {
 
     return (
     <div>
-        <NavBar />
+        <NavBar user={user}/>
         <Container>
             <Typography variant="h4" component="h1" gutterBottom>
                 Create a Lesson:

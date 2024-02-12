@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
 
-const UpdateQuiz = () => {
+const UpdateQuiz = ({user}) => {
 
     let { quizId } = useParams();
 
@@ -45,7 +45,7 @@ const UpdateQuiz = () => {
     return (
         <div>
         <div>
-            <NavBar />
+            <NavBar user={user}/>
             <h1>Update Quiz:</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='title'>Title:</label>

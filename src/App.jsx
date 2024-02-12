@@ -23,11 +23,20 @@ function App() {
   const [activities, setActivities] = useState([])
   const [quizzes, setQuizzes] = useState([])
   const [user, setUser] = useState(null)
+  const [progress, setProgress] = useState([])
 
   const checkToken = async () => {
     const user = await CheckSession();
     setUser(user);
   }
+
+  useEffect(() => {
+    const getProgress = async () => {
+      let res = await Client.get('/progress')
+      setProgress(res.data)
+    }
+    getProgress();
+  }, [])
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -71,14 +80,14 @@ function App() {
           <Route path='/' element={<Home user={user} setUser={setUser}/>}/>
           <Route path='/register' element={<Register />}/>
           <Route path='/signin' element={<Signin setUser={setUser}/>} />
-          <Route path='/lessons' element={<Lesson lessons={lessons} activities={activities} quizzes={quizzes}/>} />
-          <Route path='/progress' element={<Progress />} />
-          <Route path='/create' element={<CreateLesson setLessons={setLessons}/>}/>
-          <Route path='/createActivity' element={<CreateActivity activities={activities}/>}/>
-          <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes}/>}/>
-          <Route path='/update-lesson/:lessonId' element={<UpdateLesson />} />
-          <Route path='/update-activity/:activityId' element={<UpdateActivity />} />
-          <Route path='/update-quiz/:quizId' element={<UpdateQuiz />} />
+          <Route path='/lessons' element={<Lesson lessons={lessons} activities={activities} quizzes={quizzes} user={user}/>} />
+          <Route path='/progress' element={<Progress user={user}/>} />
+          <Route path='/create' element={<CreateLesson setLessons={setLessons} user={user}/>}/>
+          <Route path='/createActivity' element={<CreateActivity activities={activities} user={user}/>}/>
+          <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes} user={user}/>}/>
+          <Route path='/update-lesson/:lessonId' element={<UpdateLesson user={user}/>} />
+          <Route path='/update-activity/:activityId' element={<UpdateActivity user={user}/>} />
+          <Route path='/update-quiz/:quizId' element={<UpdateQuiz user={user}/>} />
           <Route path='/select-activity' element={<ActivitySelector activities={activities}/>} />
           <Route path='/select-quiz' element={<QuizSelector quizzes={quizzes}/>} />
         </Routes>

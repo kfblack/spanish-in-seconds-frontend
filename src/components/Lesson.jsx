@@ -10,9 +10,10 @@ import UpgradeIcon from '@mui/icons-material/Upgrade';
 import AddIcon from '@mui/icons-material/Add';
 import { Card, CardContent, CardActions, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 
-const Lesson = ({lessons, activities, quizzes}) => {
+const Lesson = ({lessons, activities, quizzes, user}) => {
 
     let navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const Lesson = ({lessons, activities, quizzes}) => {
     const [activityResponse, setActivityResponse] = useState({})
     const [userInputs, setUserInputs] = useState({})
     const [userAnswer, setUserAnswer] = useState({})
+    const [progress, setProgress] = useState([])
 
     const handleAddActivityClick = (lessonId) => {
         setCurrentLessonId(lessonId);
@@ -95,10 +97,21 @@ const Lesson = ({lessons, activities, quizzes}) => {
         alert(`You scored ${score} out of ${quiz.questions.length} on the quiz!`)
     }
 
+    const handleProgressComplete = async (lessonId) => {
+        try {
+            let progressId = user.progress
+            await Client.put(`/progress/${progressId}/lessons/${lessonId}`)
+            setProgress(prevProgress => ({...prevProgress, lessons: [...prevProgress.lessons, lessonId]}))
+            alert("Lesson marked as complete!")
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
 
     return (
         <div>
-            <NavBar />
+            <NavBar user={user}/>
             <Container>
                 <Typography variant="h5" component="h1" gutterBottom>
                     <h1>Lessons</h1>
@@ -120,6 +133,9 @@ const Lesson = ({lessons, activities, quizzes}) => {
                         </Button>
                         <Button variant="outlined" startIcon={<AddIcon />} onClick={() => handleAddQuizClick(lesson._id)}>
                             Add Quiz
+                        </Button>
+                        <Button variant='outlined' startIcon={<DoneAllIcon />} onClick={() => handleProgressComplete(lesson._id)}>
+                            Mark Complete
                         </Button>
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
