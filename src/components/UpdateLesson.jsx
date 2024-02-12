@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
+import {useNavigate} from 'react-router-dom'
 
 const UpdateLesson = () => {
 
     const { lessonId } = useParams();
+
+    let navigate = useNavigate()
 
     const [formValues, setFormValues] = useState({
         title: '',
@@ -40,6 +43,7 @@ const UpdateLesson = () => {
         e.preventDefault();
         try {
             await Client.put(`/lessons/${lessonId}`, formValues)
+            navigate('/lessons')
         } catch (err) {
             console.log(err)
         }

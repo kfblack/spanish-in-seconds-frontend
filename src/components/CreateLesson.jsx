@@ -6,7 +6,7 @@ import { Container, Typography, TextField, Button, Box } from '@mui/material';
 
 
 
-const CreateLesson = () => {
+const CreateLesson = ({setLessons}) => {
 
     let navigate = useNavigate();
 
@@ -24,7 +24,8 @@ const CreateLesson = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let newLesson = {...formValues, activities: [], quiz: []}
-        await Client.post('/lessons', newLesson)
+        const res = await Client.post('/lessons', newLesson)
+        setLessons(lesson => [...lesson, res.data])
         navigate('/lessons')
     }
 

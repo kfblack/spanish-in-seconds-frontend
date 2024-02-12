@@ -60,6 +60,7 @@ function App() {
     getQuizzes();
   }, [])
 
+
   return (
     <div>
       <header>
@@ -72,7 +73,7 @@ function App() {
           <Route path='/signin' element={<Signin setUser={setUser}/>} />
           <Route path='/lessons' element={<Lesson lessons={lessons} activities={activities} quizzes={quizzes}/>} />
           <Route path='/progress' element={<Progress />} />
-          <Route path='/create' element={<CreateLesson />}/>
+          <Route path='/create' element={<CreateLesson setLessons={setLessons}/>}/>
           <Route path='/createActivity' element={<CreateActivity activities={activities}/>}/>
           <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes}/>}/>
           <Route path='/update-lesson/:lessonId' element={<UpdateLesson />} />

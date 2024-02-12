@@ -4,7 +4,7 @@ import NavBar from './NavBar'
 import { useState } from 'react'
 import ActivitySelector from './ActivitySelector.jsx'
 import QuizSelector from './QuizSelector.jsx'
-import { Container, Typography, Button, Divider, Paper, CssBaseline } from '@mui/material';
+import { Container, Typography, Button, Divider, Paper, CssBaseline, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import AddIcon from '@mui/icons-material/Add';
@@ -20,6 +20,8 @@ const Lesson = ({lessons, activities, quizzes}) => {
     const [showQuizSelector, setShowQuizSelector] = useState(false);
     const [currentLessonId, setCurrentLessonId] = useState(null);
     const [showActivityAnswer, setShowActivityAnswer] = useState({});
+    const [activityResponse, setActivityResponse] = useState({})
+    const [userInputs, setUserInputs] = useState({})
 
     const handleAddActivityClick = (lessonId) => {
         setCurrentLessonId(lessonId);
@@ -71,6 +73,13 @@ const Lesson = ({lessons, activities, quizzes}) => {
         }))
     }
 
+    const handleResponse = (activityId, userResponse) => {
+        const isCorrect = activities.find(activity => activity._id === activityId).correctAnswer.toLowerCase() === userResponse.toLowerCase()
+        const feedback = isCorrect ? "Correct!": "Incorrect, try again!"
+        setActivityResponse(response => ({...response, [activityId]: {...response[activityId], userResponse, isCorrect, feedback}}))
+    }
+
+
     return (
         <div>
             <NavBar />
@@ -105,11 +114,41 @@ const Lesson = ({lessons, activities, quizzes}) => {
                                     <Card key={activity._id} variant="outlined" sx={{ marginBottom: '10px' }}>
                                         <CardContent>
                                             <Typography variant="body1">Description: {activity.description}</Typography>
-                                            <Typography variant="body3">Activity type: {activity.activityType}</Typography>
                                             <Typography variant='body2'>Activity: {activity.content}</Typography>
+                                            {activityResponse[activity._id] && (
+                                                <Typography color={activityResponse[activity._id].isCorrect? 'green': 'red'}>{activityResponse[activity._id].feedback}</Typography>
+                                            )}
+                                            {activity.activityType === 'true-false' && (
+                                                <div>
+                                                    <Button variant='contained' onClick={() => handleResponse(activity._id, 'true')}>True</Button>
+                                                    <Button variant='contained' onClick = {() => handleResponse(activity._id, 'false')}>False</Button>
+                                                </div>
+                                            )}
+                                            {activity.activityType === 'fill-in-the-blank' &&(
+                                                <div>
+                                                <TextField
+                                                    label="Your answer"
+                                                    variant='outlined'
+                                                    value={userInputs[activity._id] || ''}
+                                                    onChange={(e)=> setUserInputs({...userInputs, [activity._id]: e.target.value})}
+                                                />
+                                                <Button variant='contained' onClick={() => handleResponse(activity._id, userInputs[activity._id])}>Submit Answer</Button>
+                                                </div>
+                                            )}
+                                            {activity.activityType === 'short-answer' && (
+                                                <div>
+                                                <TextField
+                                                    label="Your answer here"
+                                                    variant='outlined'
+                                                    value={userInputs[activity._id] || ''}
+                                                    onChange={(e) => setUserInputs({...userInputs, [activity._id]: e.target.value})}
+                                                />
+                                                <Button variant='contained' onClick={() => handleResponse(activity._id, userInputs[activity._id])}>Submit Answer</Button>
+                                                </div>
+                                            )}
                                             <Button onClick={() => toggleActivityAnswer(activity._id)}>Show Answer</Button>
                                             {showActivityAnswer[activity._id] && (
-                                                <Typography variant="h6">Correct Answer: {activity.correctAnswer}</Typography>
+                                                <Typography variant="h6">{activity.correctAnswer}</Typography>
                                             )}
                                         </CardContent>
                                     </Card>
