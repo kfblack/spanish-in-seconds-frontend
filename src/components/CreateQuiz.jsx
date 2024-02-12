@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
-import { Container, Typography, TextField, Button, Box, Card, CardContent, CardActions } from '@mui/material';
+import { Container, Typography, TextField, Radio, Button, FormControlLabel, Box, Card, CardContent, CardActions, RadioGroup } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -134,6 +134,17 @@ const CreateQuiz = ({quizzes}) => {
         navigate(`/update-quiz/${quizId}`)
     }
 
+    const handleCorrectAnswerChange = (questionIndex, e) => {
+        const newValue = e.target.value;
+        const updatedQuestions = quiz.questions.map((question, index) => {
+            if (index === questionIndex) {
+                return {...question, correctAnswer: newValue};
+            } 
+            return question
+        })
+        setQuiz(quiz => ({...quiz, questions: updatedQuestions}))
+    }
+
     return (
         <div>
             <NavBar />
@@ -172,30 +183,42 @@ const CreateQuiz = ({quizzes}) => {
                             onChange={(e) => handleQuestionChange(index, e)}
                             fullWidth
                         />
-                    {question.possibleAnswers.map((answer, idx) => (
-                        <div>
-                        <TextField 
-                            key = {idx}
-                            label = {`Answer choice ${idx + 1}`}
-                            margin = 'normal'
-                            value = {answer}
-                            onChange={(e) => handlePossibleAnswerChange(index, idx, e)}
-                            fullWidth
-                        />
-                        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => addPossibleAnswer(index)}>
-                            Add Answer Choice
-                        </Button> 
-                        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => removePossibleAnswer(index, idx)}>
-                            Remove Answer Choice
-                        </Button> 
-                        </div>
-                    ))}
-                    <Button variant="outlined" startIcon={<AddIcon />} onClick={() => addQuestion()}>
-                        Add Question
-                    </Button>                    
-                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => removeQuestion(index)}>
-                        Remove Question
-                    </Button>   
+                        {question.possibleAnswers.map((answer, idx) => (
+                            <div>
+                                <TextField 
+                                    key = {idx}
+                                    label = {`Answer choice ${idx + 1}`}
+                                    margin = 'normal'
+                                    value = {answer}
+                                    onChange={(e) => handlePossibleAnswerChange(index, idx, e)}
+                                    fullWidth
+                                />
+                                <RadioGroup
+                                    aria-labelledby='correct-answer'
+                                    name={`correctAnswer-${index}`}
+                                    value={question.correctAnswer}
+                                    onChange={(e) => handleCorrectAnswerChange(index, e)}
+                                >
+                                    <FormControlLabel
+                                        value={answer}
+                                        control={<Radio />}
+                                        label={answer}
+                                    />
+                                </RadioGroup>
+                                <Button variant="outlined" startIcon={<AddIcon />} onClick={() => addPossibleAnswer(index)}>
+                                    Add Answer Choice
+                                </Button> 
+                                <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => removePossibleAnswer(index, idx)}>
+                                    Remove Answer Choice
+                                </Button> 
+                            </div>
+                        ))}
+                        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => addQuestion()}>
+                            Add Question
+                        </Button>                    
+                        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => removeQuestion(index)}>
+                            Remove Question
+                        </Button>   
                     </Box>
                 ))}
                 <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>Create Quiz</Button>
