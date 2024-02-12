@@ -68,7 +68,7 @@ function App() {
       </header>
       <main>
         <Routes>
-          <Route path='/' element={<Home />}/>
+          <Route path='/' element={<Home user={user} setUser={setUser}/>}/>
           <Route path='/register' element={<Register />}/>
           <Route path='/signin' element={<Signin setUser={setUser}/>} />
           <Route path='/lessons' element={<Lesson lessons={lessons} activities={activities} quizzes={quizzes}/>} />

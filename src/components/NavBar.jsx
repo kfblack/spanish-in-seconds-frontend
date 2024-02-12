@@ -21,8 +21,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import QuizIcon from '@mui/icons-material/Quiz';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import {SignOutUser} from '../services/Auth.js'
 
-const NavBar = () => {
+const NavBar = ({user, setUser}) => {
     const [state, setState] = useState({left: false})
 
     const iconMapping = {
@@ -50,6 +51,11 @@ const NavBar = () => {
 
         setState({ ...state, [anchor]: open });
     };
+
+    const handleLogout = () => {
+        SignOutUser();
+        setUser(null);
+    }
 
     const list = (anchor) => (
         <Box
@@ -117,9 +123,12 @@ const NavBar = () => {
                         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                             Spanish in Seconds
                         </Link>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            {user ? `Hola ${user.name}!`: ""}
+                        </Typography>
                         </Typography>
                         <Button component={Link} to='/register' color='inherit'>Sign Up</Button>
-                        <Button component={Link} to='/signin' color='inherit'>Log In</Button>
+                        {user ? <Button onClick={handleLogout} color='inherit'>Log Out</Button>: <Button component={Link} to='/signin' color='inherit'>Log In</Button>}
                     </ToolBar>
                 </AppBar>
             </Box>

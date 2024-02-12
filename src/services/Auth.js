@@ -10,6 +10,14 @@ export const SignInUser = async (data) => {
     }
 }
 
+export const SignOutUser = async () => {
+  try {
+      localStorage.removeItem('token')
+  } catch (error) {
+      throw error
+  }
+}
+
 export const RegisterUser = async (data) => {
   try {
     const res = await Client.post('/auth/register', data)

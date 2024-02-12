@@ -11,11 +11,11 @@ const cultureImages = [
     { url: 'https://i.postimg.cc/fT7RXVj8/download-2.jpg', title: 'Spanish Art' },
 ];
 
-const Home = () => {
+const Home = ({user, setUser}) => {
 
 return (
     <div>
-        <NavBar />
+        <NavBar user={user} setUser={setUser}/>
         <Container>
             <Typography variant="h4" component="h1" gutterBottom>
                 Learn Spanish Quickly!
