@@ -31,7 +31,7 @@ const ActivitySelector = ({ activities, onSave }) => {
                                     name={activity.content}
                                 />
                             }
-                            label={activity.content}
+                            label={`${activity.description} - ${activity.content}`}
                         />
                     </CardContent>
                 </Card>

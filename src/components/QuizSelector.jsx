@@ -31,7 +31,7 @@ const QuizSelector = ({ quizzes, onSave }) => {
                                     name={quiz.description}
                                 />
                             }
-                            label={quiz.description}
+                            label={`${quiz.title} - ${quiz.description}`}
                         />
                     </CardContent>
                 </Card>

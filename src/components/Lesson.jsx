@@ -1,7 +1,7 @@
 import Client from '../services/api.js'
 import { useNavigate } from 'react-router-dom'
 import NavBar from './NavBar'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import ActivitySelector from './ActivitySelector.jsx'
 import QuizSelector from './QuizSelector.jsx'
 import { Container, Typography, Button, Divider, Paper, CssBaseline, TextField } from '@mui/material';
@@ -26,15 +26,26 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
     const [userAnswer, setUserAnswer] = useState({})
     const [progress, setProgress] = useState([])
 
+    const activitySelectorRef = useRef(null)
+    const quizSelectorRef = useRef(null)
+
+    const scrollToRef = (ref) => {
+        setTimeout(() => {
+            ref.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 0); 
+    };
+    
     const handleAddActivityClick = (lessonId) => {
         setCurrentLessonId(lessonId);
         setShowActivitySelector(true);
+        scrollToRef(activitySelectorRef); 
     };
-
-    const handleAddQuizClick = (lessonId) => [
-        setCurrentLessonId(lessonId),
-        setShowQuizSelector(true)
-    ]
+    
+    const handleAddQuizClick = (lessonId) => {
+        setCurrentLessonId(lessonId);
+        setShowQuizSelector(true);
+        scrollToRef(quizSelectorRef); 
+    };
 
     const saveActivitiesToLesson = async (selectedActivitiesIds) => {
         try {
@@ -215,16 +226,20 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                     </Paper>
             ))}
             {showActivitySelector && (
-                <ActivitySelector
-                    activities={activities || []}
-                    onSave={saveActivitiesToLesson}
-                />
+                <div ref={activitySelectorRef}>
+                    <ActivitySelector
+                        activities={activities || []}
+                        onSave={saveActivitiesToLesson}
+                    />
+                </div>
             )}
             {showQuizSelector && (
-                <QuizSelector
-                    quizzes={quizzes || []}
-                    onSave={saveQuizzesToLesson}
-                />
+                <div ref={quizSelectorRef}>
+                    <QuizSelector
+                        quizzes={quizzes || []}
+                        onSave={saveQuizzesToLesson}
+                    />
+                </div>
             )}
             </Container>
         </div>
