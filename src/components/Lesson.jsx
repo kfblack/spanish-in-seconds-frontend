@@ -13,7 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 
-const Lesson = ({lessons, activities, quizzes, user}) => {
+const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
 
     let navigate = useNavigate();
 
@@ -81,7 +81,6 @@ const Lesson = ({lessons, activities, quizzes, user}) => {
         const feedback = isCorrect ? "Correct!": "Incorrect, try again!"
         setActivityResponse(response => ({...response, [activityId]: {...response[activityId], userResponse, isCorrect, feedback}}))
     }
-
     const handleAnswer = (quizId, questionId, answer) => {
         setUserAnswer(prevAnswer => ({...prevAnswer, [quizId]: {...prevAnswer[quizId], [questionId]: answer}}))
     }
@@ -101,7 +100,6 @@ const Lesson = ({lessons, activities, quizzes, user}) => {
         try {
             let userId = user.id
             await Client.post(`/progress/${userId}/lessons/${lessonId}`)
-            // setProgress(prevProgress => ({...prevProgress, lessons: [...prevProgress.lessons, lessonId]}))
             alert("Lesson marked as complete!")
         } catch (err) {
             console.log(err)
@@ -111,7 +109,7 @@ const Lesson = ({lessons, activities, quizzes, user}) => {
 
     return (
         <div>
-            <NavBar user={user}/>
+            <NavBar user={user} setUser={setUser}/>
             <Container>
                 <Typography variant="h5" component="h1" gutterBottom>
                     <h1>Lessons</h1>

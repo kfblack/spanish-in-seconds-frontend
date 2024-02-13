@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
 
 
-const Register = () => {
+const Register = (setUser) => {
 
     let navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Register = () => {
 
     return (
         <div>
-            <NavBar />
+            <NavBar setUser={setUser}/>
             <Container>
             <Box
                 sx={{

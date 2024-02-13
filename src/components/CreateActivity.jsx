@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import { Container, Typography, TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Card, CardContent, CardActions } from '@mui/material';
 
 
-const CreateActivity = ({activities, user}) => {
+const CreateActivity = ({activities, user, setUser}) => {
 
     let navigate = useNavigate();
 
@@ -56,7 +56,7 @@ const CreateActivity = ({activities, user}) => {
 
     return (
         <div>
-        <NavBar user={user}/>
+        <NavBar user={user} setUser={setUser}/>
         <Container>
             <Typography variant="h4" component="h1" gutterBottom>
                 Create an Activity:

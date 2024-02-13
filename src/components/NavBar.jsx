@@ -38,7 +38,7 @@ const NavBar = ({user, setUser}) => {
     const pathMapping = {
         "Home": '/',
         "Lessons": '/lessons',
-        "My Progress": '/progress',
+        "My Progress": `/progress`,
         "New Lesson": '/create',
         "New Activity": '/createActivity',
         "New Quiz": '/createQuiz'
