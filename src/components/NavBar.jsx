@@ -108,7 +108,7 @@ const NavBar = ({user, setUser}) => {
                         <div>
                             {['Menu'].map((anchor) => (
                                 <React.Fragment key={anchor}>
-                                    <Button onClick={toggleDrawer(anchor, true)} sx={{ color: '#00c3ff' }}>{anchor}</Button>
+                                    <Button onClick={toggleDrawer(anchor, true)} sx={{ backgroundColor: '#FFB300', color: '#ffff' }}>{anchor}</Button>
                                     <Drawer
                                         anchor={anchor}
                                         open={state[anchor]}
@@ -128,8 +128,8 @@ const NavBar = ({user, setUser}) => {
                             {user ? `Hola ${user.name}!`: ""}
                         </Typography>
                         </Typography>
-                        <Button component={Link} to='/register' color='inherit'>Sign Up</Button>
-                        {user ? <Button onClick={handleLogout} color='inherit'>Log Out</Button>: <Button component={Link} to='/signin' color='inherit'>Log In</Button>}
+                        <Button component={Link} to='/register' sx={{ backgroundColor: '#FFB300', color: '#ffff', mr: 2 }}>Sign Up</Button>
+                        {user ? <Button onClick={handleLogout} sx={{ backgroundColor: '#FFB300', color: '#ffff', mr: 2 }}>Log Out</Button>: <Button component={Link} to='/signin' sx={{ backgroundColor: '#FFB300', color: '#ffff' }}>Log In</Button>}
                     </ToolBar>
                 </AppBar>
             </Box>

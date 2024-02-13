@@ -15,6 +15,8 @@ import UpdateActivity from './components/UpdateActivity'
 import UpdateQuiz from './components/UpdateQuiz'
 import ActivitySelector from './components/ActivitySelector'
 import QuizSelector from './components/QuizSelector'
+import Theme from './components/Theme'
+import {ThemeProvider} from '@mui/material/styles'
 
 
 function App() {
@@ -62,6 +64,7 @@ function App() {
 
 
   return (
+    <ThemeProvider theme={Theme}>
     <div>
       <header>
 
@@ -87,6 +90,7 @@ function App() {
 
       </footer>
     </div>
+    </ThemeProvider>
   )
 }
 

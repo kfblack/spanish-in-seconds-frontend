@@ -11,6 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Card, CardContent, CardActions, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import React from 'react'
 
 
 const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
@@ -130,7 +131,13 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                         <Typography variant='h5' component='h2' >Level: {lesson.level}</Typography>
                         <Typography variant='h6' component='h3'>Lesson: {lesson.title}</Typography>
                         <Typography variant='body1'>Description: {lesson.description}</Typography>
-                        <Typography variant='body2' paragraph>Content: {lesson.content}</Typography>
+                        <Typography variant='body2' paragraph>
+                            {lesson.content.split('\n').map((line, index, array) => (
+                                <React.Fragment key={index}>
+                                    {line}{index < (array.length - 1) ? <br /> : null}
+                                </React.Fragment>
+                            ))}
+                        </Typography>
                         <Button variant="outlined" startIcon={<UpgradeIcon />} onClick={() => handleUpdate(lesson._id)}>
                             Update
                         </Button>
@@ -217,7 +224,7 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                                                         ))}
                                                 </div>
                                             ))}
-                                            <Button onClick={() => handleSubmitQuiz(quiz._id)}>Submit Quiz</Button>
+                                            <Button onClick={() => handleSubmitQuiz(quiz._id)} sx={{ backgroundColor: '#E53935', color: '#ffff', mr: 2 }}>Submit Quiz</Button>
                                         </CardContent>
                                     </Card>
                                 ))}
