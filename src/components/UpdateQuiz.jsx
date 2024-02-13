@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
+import {TextField, Container, Box, Typography, Button} from '@mui/material'
 
 const UpdateQuiz = ({user, setUser}) => {
 
@@ -46,31 +47,38 @@ const UpdateQuiz = ({user, setUser}) => {
         <div>
         <div>
             <NavBar user={user} setUser={setUser}/>
-            <h1>Update Quiz:</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='title'>Title:</label>
-                    <input
-                    onChange={handleChange}
-                    name="title"
-                    type="text"
-                    placeholder="Quiz title"
-                    value={formValues.title}
-                    required
+            <Container>
+                <Typography variant="h4" component="h1" gutterBottom>Update Quiz:</Typography>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="title"
+                        label="Title"
+                        name="title"
+                        placeholder="Quiz title"
+                        value={formValues.title}
+                        onChange={handleChange}
                     />
-                <label htmlFor='description'>Description:</label>
-                    <input
-                    onChange={handleChange}
-                    name="description"
-                    type="text"
-                    placeholder="Quiz description"
-                    value={formValues.description}
-                    required
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="description"
+                        label="Description"
+                        name="description"
+                        placeholder="Quiz description"
+                        value={formValues.description}
+                        onChange={handleChange}
                     />
-                <button type='submit'>Update Quiz</button>
-            </form>
+                    </Box>
+                <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>Update Quiz</Button>
+            </Container>
         </div>
         </div>
     )
 }
 
 export default UpdateQuiz
+

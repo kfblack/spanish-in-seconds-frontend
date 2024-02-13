@@ -26,6 +26,7 @@ import {SignOutUser} from '../services/Auth.js'
 const NavBar = ({user, setUser}) => {
     const [state, setState] = useState({left: false})
 
+
     const iconMapping = {
         "Home": <HomeIcon />,
         "Lessons": <NewspaperIcon />,
@@ -38,7 +39,7 @@ const NavBar = ({user, setUser}) => {
     const pathMapping = {
         "Home": '/',
         "Lessons": '/lessons',
-        "My Progress": `/progress`,
+        ...(user && user.id ? {"My Progress": `/progress/${user.id}`} : {}),
         "New Lesson": '/create',
         "New Activity": '/createActivity',
         "New Quiz": '/createQuiz'

@@ -2,14 +2,18 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
+import {TextField, Container, Box, Typography, Button} from '@mui/material'
+
 
 const UpdateActivity = ({user, setUser}) => {
 
     let { activityId } = useParams();
 
     const [formValues, setFormValues] = useState({
-        questionType: '',
+        activityType: '',
         content: '',
+        description: '',
+        answer: '',
     })
 
     useEffect(() => {
@@ -18,8 +22,10 @@ const UpdateActivity = ({user, setUser}) => {
                 const res = await Client.get(`/activities/${activityId}`)
                 const activity = res.data;
                 setFormValues({
-                    questionType: activity.questionType,
+                    questionType: activity.description,
                     content: activity.content,
+                    answer: activity.answer,
+                    activityType: activity.activityType
                 })
             } catch (err) {
                 console.log(err);
@@ -46,28 +52,56 @@ const UpdateActivity = ({user, setUser}) => {
         <div>
         <div>
             <NavBar user={user} setUser={setUser}/>
-            <h1>Update Activity:</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='questionType'>Question Type:</label>
-                    <input
-                    onChange={handleChange}
-                    name="questionType"
-                    type="text"
-                    placeholder="Type of question"
-                    value={formValues.questionType}
-                    required
+            <Container>
+                <Typography variant="h4" component="h1" gutterBottom>Update Activity:</Typography>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="description"
+                        label="Description"
+                        name="description"
+                        placeholder="Activity description"
+                        value={formValues.description}
+                        onChange={handleChange}
                     />
-                <label htmlFor='content'>Content:</label>
-                    <input
-                    onChange={handleChange}
-                    name="content"
-                    type="text"
-                    placeholder="Activity Content"
-                    value={formValues.content}
-                    required
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="content"
+                        label="Content"
+                        name="content"
+                        placeholder="Activity content"
+                        value={formValues.content}
+                        onChange={handleChange}
                     />
-                <button type='submit'>Update Activity</button>
-            </form>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="activityType"
+                        label="Activity Type"
+                        name="activityType"
+                        placeholder="Quiz title"
+                        value={formValues.activityType}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="answer"
+                        label="Answer"
+                        name="answer"
+                        placeholder="Activity answer"
+                        value={formValues.answer}
+                        onChange={handleChange}
+                    />
+                    </Box>
+                <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>Update Activity</Button>
+            </Container>
         </div>
         </div>
     )

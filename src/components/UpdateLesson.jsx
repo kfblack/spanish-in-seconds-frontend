@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import Client from '../services/api.js'
 import NavBar from './NavBar'
 import {useNavigate} from 'react-router-dom'
+import {TextField, Container, Box, Typography, Button} from '@mui/material'
+
 
 const UpdateLesson = ({user, setUser}) => {
 
@@ -52,46 +54,56 @@ const UpdateLesson = ({user, setUser}) => {
     return (
         <div>
             <NavBar user={user} setUser={setUser}/>
-            <h1>Create a Lesson:</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='level'>Level:</label>
-                    <input
-                    onChange={handleChange}
-                    name="level"
-                    type="number"
-                    placeholder="Difficulty level"
-                    value={formValues.level}
-                    required
+            <Container>
+                <Typography variant="h4" component="h1" gutterBottom>Update Lesson:</Typography>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="description"
+                        label="Description"
+                        name="description"
+                        placeholder="Activity description"
+                        value={formValues.description}
+                        onChange={handleChange}
                     />
-                <label htmlFor='title'>Title:</label>
-                    <input
-                    onChange={handleChange}
-                    name="title"
-                    type="text"
-                    placeholder="Lesson Title"
-                    value={formValues.title}
-                    required
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="content"
+                        label="Content"
+                        name="content"
+                        placeholder="Activity content"
+                        value={formValues.content}
+                        onChange={handleChange}
                     />
-                <label htmlFor='description'>Description:</label>
-                    <input
-                    onChange={handleChange}
-                    name="description"
-                    type="text"
-                    placeholder="Lesson Description"
-                    value={formValues.description}
-                    required
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="title"
+                        label="Title"
+                        name="title"
+                        placeholder="Lesson title"
+                        value={formValues.title}
+                        onChange={handleChange}
                     />
-                <label htmlFor='content'>Content:</label>
-                    <input
-                    onChange={handleChange}
-                    name="content"
-                    type="text"
-                    placeholder="Lesson Content"
-                    value={formValues.content}
-                    required
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="level"
+                        label="Level"
+                        name="level"
+                        placeholder="Lesson level"
+                        value={formValues.level}
+                        onChange={handleChange}
                     />
-                <button type='submit'>Update Lesson</button>
-            </form>
+                    </Box>
+                <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>Update Lesson</Button>
+            </Container>
         </div>
     )
 }

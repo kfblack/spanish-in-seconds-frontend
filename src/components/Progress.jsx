@@ -2,10 +2,14 @@ import NavBar from './NavBar'
 import {useEffect, useState } from 'react'
 import {useParams} from 'react-router-dom'
 import Client from '../services/api.js'
+import {Card, CardContent, Box, Container, Typography} from '@mui/material'
 
 const Progress = ({user, setUser}) => {
 
+
     const [userData, setUserData] = useState({})
+
+
 
     let {userId} = useParams();
 
@@ -20,11 +24,20 @@ const Progress = ({user, setUser}) => {
     return (
         <div>
             <NavBar user={user} setUser={setUser}/>
-            <h1>My Progress</h1>
-            <h2>Lessons completed: </h2>
-            {userData.progress && userData?.progress.map(prog => (
-                <h1>{prog.title}</h1>
-            ))}
+            <Container>
+                <Typography variant='h4' component='h1' gutterBottom>Lessons Completed</Typography>
+                <Box>
+                    {userData.progress && userData?.progress.map((prog, index) => (
+                        <Card key={index} sx={{ mb: 2}}>
+                            <CardContent>
+                                <Typography variant='h6'>Level: {prog.level}</Typography>
+                                <Typography variant='h5'>Title: {prog.title}</Typography>
+                                <Typography variant='boyd1'>Description: {prog.description}</Typography>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Box>
+            </Container>
         </div>
     )
 }
