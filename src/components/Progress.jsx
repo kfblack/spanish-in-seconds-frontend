@@ -9,7 +9,7 @@ const Progress = ({user}) => {
             <h1>My Progress</h1>
                 {user?.progress}
             <h2>Lessons completed: </h2>
-                {user?.progress.lessons}
+                {user?.progress.lesson}
                 <p>Date completed: {user?.progress.dateComplete}</p>
         </div>
     )

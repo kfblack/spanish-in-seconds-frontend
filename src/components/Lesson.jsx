@@ -99,9 +99,9 @@ const Lesson = ({lessons, activities, quizzes, user}) => {
 
     const handleProgressComplete = async (lessonId) => {
         try {
-            let progressId = user.progress
-            await Client.put(`/progress/${progressId}/lessons/${lessonId}`)
-            setProgress(prevProgress => ({...prevProgress, lessons: [...prevProgress.lessons, lessonId]}))
+            let userId = user.id
+            await Client.post(`/progress/${userId}/lessons/${lessonId}`)
+            // setProgress(prevProgress => ({...prevProgress, lessons: [...prevProgress.lessons, lessonId]}))
             alert("Lesson marked as complete!")
         } catch (err) {
             console.log(err)
