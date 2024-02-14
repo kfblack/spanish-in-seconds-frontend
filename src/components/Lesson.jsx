@@ -108,6 +108,8 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
         alert(`You scored ${score} out of ${quiz.questions.length} on the quiz!`)
     }
 
+    const indexToLetter = (index) => String.fromCharCode(65 + index)
+
     const handleProgressComplete = async (lessonId) => {
         try {
             let userId = user.id
@@ -217,14 +219,19 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                                                 <div>
                                                     <Typography variant="body1">Questions: {question.content}</Typography>
                                                     <Typography variant="body2">Answer Choices:</Typography>
-                                                        {question.possibleAnswers?.map((answer) => (
-                                                            <li>
-                                                                <Button variant='text' onClick={() => handleAnswer(quiz._id, question._id, answer)}>{answer}</Button>
-                                                            </li>
+                                                    <div>
+                                                        {question.possibleAnswers?.map((answer, answerIndex) => (
+                                                                <Button
+                                                                variant={userAnswer[quiz._id]?.[question._id] === answer ? 'contained': 'outlined'} 
+                                                                onClick={() => handleAnswer(quiz._id, question._id, answer)}
+                                                                style={{ textAlign: 'left', display: 'block', margin: '5px', backgroundColor: userAnswer[quiz._id]?.[question._id] === answer ? '#4caf50': ''}}>
+                                                                    {indexToLetter(answerIndex)}, {answer}
+                                                                </Button>
                                                         ))}
+                                                    </div>
                                                 </div>
                                             ))}
-                                            <Button onClick={() => handleSubmitQuiz(quiz._id)} sx={{ backgroundColor: '#E53935', color: '#ffff', mr: 2 }}>Submit Quiz</Button>
+                                            <Button onClick={() => handleSubmitQuiz(quiz._id)} sx={{ backgroundColor: '#E53935', color: '#FFB300', mr: 2 }}>Submit Quiz</Button>
                                         </CardContent>
                                     </Card>
                                 ))}

@@ -145,6 +145,8 @@ const CreateQuiz = ({quizzes, user, setUser}) => {
         setQuiz(quiz => ({...quiz, questions: updatedQuestions}))
     }
 
+    const indexToLetter = (index) => String.fromCharCode(65 + index)
+
     return (
         <div>
             <NavBar user={user} setUser={setUser}/>
@@ -233,17 +235,22 @@ const CreateQuiz = ({quizzes, user, setUser}) => {
                             <div>
                                 <Typography variant="body1">Questions: {question.content}</Typography>
                                 <Typography variant="body2">Answers</Typography>
+                                <div>
                                     {question.possibleAnswers?.map((answer, aIndex) => (
-                                        <li>
-                                            <Button variant='text' onClick={() => handleAnswerClick(qIndex, aIndex)}>{answer}</Button>
-                                        </li>
+                                            <Button 
+                                            variant='text' 
+                                            onClick={() => handleAnswerClick(qIndex, aIndex)}
+                                            style={{ textAlign: 'left', display: 'block', margin: '5px'}}>
+                                                {indexToLetter(aIndex)}, {answer}
+                                            </Button>
                                     ))}
+                                </div>
                             </div>
                         ))}
                     </CardContent>
                     <CardActions>
-                        <Button size="small" onClick={() => handleUpdate(quiz._id)}>Update</Button>
-                        <Button size="small" color="error" onClick={() => handleDelete(quiz._id)}>Delete</Button>
+                        <Button size="small" onClick={() => handleUpdate(quiz._id)} sx={{ backgroundColor: '#E53935', color: '#FFB300', mr: 2 }}>Update</Button>
+                        <Button size="small" color="error" onClick={() => handleDelete(quiz._id)} sx={{ backgroundColor: '#E53935', color: '#FFB300', mr: 2 }}>Delete</Button>
                     </CardActions>
                 </Card>
             ))}
