@@ -23,7 +23,7 @@ This project is a full-stack MERN application, on learning the basics of Spanish
 - Vercel
 ***
 #### **_Getting Started_**
-[Click here to access the app!](spanish-in-seconds-2jcwqxi56-kfblacks-projects.vercel.app) | [Component Hierarchy Diagram](https://lucid.app/lucidchart/d5c33ab7-d2df-47da-8cee-36acf4a15f88/edit?viewport_loc=-300%2C-210%2C1423%2C1436%2C0_0&invitationId=inv_8abdf021-273b-4b4f-b55f-5b82b148254e) | [ERD](https://drive.google.com/file/d/1H4iZnxtQfw8XdYAq7HZmiRyAGffmSRJF/view?usp=sharing) | [Trello Board](https://trello.com/invite/b/f87QIY6G/ATTIbce6e6717401ad92bf774281d143113dAE93D148/spanish-in-seconds) | [Back-end Repo](https://github.com/kfblack/spanish-in-seconds-backend)
+[Click here to access the app!](https://spanish-in-seconds.vercel.app/) | [Component Hierarchy Diagram](https://lucid.app/lucidchart/d5c33ab7-d2df-47da-8cee-36acf4a15f88/edit?viewport_loc=-300%2C-210%2C1423%2C1436%2C0_0&invitationId=inv_8abdf021-273b-4b4f-b55f-5b82b148254e) | [ERD](https://drive.google.com/file/d/1H4iZnxtQfw8XdYAq7HZmiRyAGffmSRJF/view?usp=sharing) | [Trello Board](https://trello.com/invite/b/f87QIY6G/ATTIbce6e6717401ad92bf774281d143113dAE93D148/spanish-in-seconds) | [Back-end Repo](https://github.com/kfblack/spanish-in-seconds-backend)
 ***
 #### **_Screenshots_**
 
