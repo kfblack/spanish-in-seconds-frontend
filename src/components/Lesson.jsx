@@ -4,7 +4,7 @@ import NavBar from './NavBar'
 import { useState, useRef } from 'react'
 import ActivitySelector from './ActivitySelector.jsx'
 import QuizSelector from './QuizSelector.jsx'
-import { Container, Typography, Button, Divider, Paper, CssBaseline, TextField } from '@mui/material';
+import { Container, Typography, Button, Divider, Paper, CssBaseline, TextField, Snackbar } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import AddIcon from '@mui/icons-material/Add';
@@ -12,6 +12,7 @@ import { Card, CardContent, CardActions, Accordion, AccordionSummary, AccordionD
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import React from 'react'
+
 
 
 const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
@@ -26,9 +27,17 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
     const [userInputs, setUserInputs] = useState({})
     const [userAnswer, setUserAnswer] = useState({})
     const [progress, setProgress] = useState([])
+    const [openSnackbar, setOpenSnackbar] = useState(false)
+    const [snackbarMessage, setSnackbarMessage] = useState('')
+    const [openSubmitSnackbar, setOpenSubmitSnackbar] = useState(false)
+    const [submitMessage, setSubmitMessage] = useState('')
 
     const activitySelectorRef = useRef(null)
     const quizSelectorRef = useRef(null)
+
+    const completeSound = useRef(new Audio('../public/sounds/mixkit-animated-small-group-applause-523.wav'))
+    const clickSound = useRef(new Audio('../public/sounds/mixkit-game-click-1114.wav'))
+    const submitSound = useRef(new Audio('../public/sounds/mixkit-select-click-1109.wav'))
 
     const scrollToRef = (ref) => {
         setTimeout(() => {
@@ -95,6 +104,7 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
     }
     const handleAnswer = (quizId, questionId, answer) => {
         setUserAnswer(prevAnswer => ({...prevAnswer, [quizId]: {...prevAnswer[quizId], [questionId]: answer}}))
+        clickSound.current.play()
     }
 
     const handleSubmitQuiz = (quizId) => {
@@ -112,7 +122,9 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
         if (incorrectQuestions.length > 0) {
             feedbackMessage += '\n\Incorrect Questions:\n-' + incorrectQuestions.join('\n- ')
         }
-        alert(feedbackMessage)
+        setSubmitMessage(feedbackMessage)
+        setOpenSubmitSnackbar(true)
+        submitSound.current.play()
     }
 
     const indexToLetter = (index) => String.fromCharCode(65 + index)
@@ -121,10 +133,26 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
         try {
             let userId = user.id
             await Client.post(`/progress/${userId}/lessons/${lessonId}`)
-            alert("Lesson marked as complete!")
+            setSnackbarMessage("Lesson marked as complete, great work!")
+            setOpenSnackbar(true)
+            completeSound.current.play()
         } catch (err) {
             console.log(err)
         }
+    }
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpenSnackbar(false)
+    }
+
+    const handleCloseSubmitSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSubmitSnackbar(false)
     }
 
 
@@ -262,6 +290,18 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                     />
                 </div>
             )}
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                message={snackbarMessage}
+            />
+            <Snackbar
+                open={openSubmitSnackbar}
+                autoHideDuration={8000}
+                onClose={handleCloseSubmitSnackbar}
+                message={submitMessage}
+            />
             </Container>
         </div>
     )
