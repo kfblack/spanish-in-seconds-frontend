@@ -35,9 +35,9 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
     const activitySelectorRef = useRef(null)
     const quizSelectorRef = useRef(null)
 
-    const completeSound = useRef(new Audio('../public/sounds/mixkit-animated-small-group-applause-523.wav'))
-    const clickSound = useRef(new Audio('../public/sounds/mixkit-game-click-1114.wav'))
-    const submitSound = useRef(new Audio('../public/sounds/mixkit-select-click-1109.wav'))
+    const completeSound = useRef(new Audio('../sounds/mixkit-animated-small-group-applause-523.wav'))
+    const clickSound = useRef(new Audio('../sounds/mixkit-game-click-1114.wav'))
+    const submitSound = useRef(new Audio('../sounds/mixkit-select-click-1109.wav'))
 
     const scrollToRef = (ref) => {
         setTimeout(() => {
@@ -100,6 +100,7 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
     const handleResponse = (activityId, userResponse) => {
         const isCorrect = activities.find(activity => activity._id === activityId).correctAnswer.toLowerCase() === userResponse.toLowerCase()
         const feedback = isCorrect ? "Correct!": "Incorrect, try again!"
+        clickSound.current.play()
         setActivityResponse(response => ({...response, [activityId]: {...response[activityId], userResponse, isCorrect, feedback}}))
     }
     const handleAnswer = (quizId, questionId, answer) => {

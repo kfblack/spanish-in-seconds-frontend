@@ -2,6 +2,9 @@ import React from 'react'
 import NavBar from './NavBar'
 import { Container, Typography, Button, Grid, Card, CardMedia, CardContent, Paper } from '@mui/material';
 import {Link} from 'react-router-dom'
+import {useRef, useState} from 'react'
+import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
+
 
 
 const cultureImages = [
@@ -11,7 +14,25 @@ const cultureImages = [
     { url: 'https://i.postimg.cc/fT7RXVj8/download-2.jpg', title: 'Spanish Art' },
 ];
 
+
 const Home = ({user, setUser}) => {
+
+    const [openDialog, setOpenDialog] = useState(false)
+
+    const clickSound = useRef(new Audio('../sounds/mixkit-quick-positive-video-game-notification-interface-265.wav'));
+
+    const playClick = () => {
+        clickSound.current.play()
+    }
+
+    const handleClickOpenDialog = () => {
+        setOpenDialog(true)
+    }
+
+    const handleClickCloseDialog = () => {
+        setOpenDialog(false)
+    }
+
 
 return (
     <div>
@@ -28,7 +49,7 @@ return (
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                    <Card>
+                    <Card onClick={handleClickOpenDialog}>
                         <CardMedia
                             component="img"
                             height="140"
@@ -45,6 +66,24 @@ return (
                         </CardContent>
                     </Card>
                 </Grid>
+                <Dialog open={openDialog} onclose={handleClickCloseDialog}>
+                    <DialogTitle>{"Why Learn Spanish?"}</DialogTitle>
+                    <DialogContent>
+                        <iframe
+                            width="560"
+                            height="315"
+                            src="https://www.youtube.com/embed/7QIdFk6yzh8"
+                            title="11 Reasons Why You Should Learn Spanish - Olly Richards"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
+                        <DialogContentText>
+                            Here's a video, by Olly Richards, on the importance of learning Spanish and all its' respective benefits!
+                        </DialogContentText>
+                    </DialogContent>
+                    <Button onClick={handleClickCloseDialog}>Close</Button>
+                </Dialog>
                 <Grid item xs={12} md={6}>
                     <Paper elevation={3} style={{ padding: '20px' }}>
                         <Typography variant="h6" component="h3">
@@ -80,7 +119,7 @@ return (
                     </Grid>
                 ))}
             </Grid>
-            <Button component={Link} to="/lessons" variant="contained" color="primary" style={{ marginTop: '20px' }}>
+            <Button onClick={playClick} component={Link} to="/lessons" variant="contained" color="primary" style={{ marginTop: '20px' }}>
                 Start Your First Lesson
             </Button>
         </Container>
