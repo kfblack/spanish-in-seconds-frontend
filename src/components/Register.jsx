@@ -27,6 +27,7 @@ const Register = (setUser) => {
             name: formValues.name,
             email: formValues.email,
             password: formValues.password,
+            avatar: formValues.avatar
         })
         setFormValues({
             name: '',

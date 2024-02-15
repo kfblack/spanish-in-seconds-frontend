@@ -138,6 +138,18 @@ return (
                     <Button onClick={handleClickCloseDialog}>Close</Button>
                 </Dialog>
             ))}
+            <Grid item xs={12} md={6}>
+                    <Paper elevation={3} style={{ padding: '20px', marginTop: '30px'}}>
+                        <Typography variant="h6" component="h3">
+                            Tips to be successful: 
+                        </Typography>
+                        <li>Practice as often as possible... the more you practice the better it sticks!</li>
+                        <li>Spend a maximum of an hour or two per day on the topics, after that, not much will sink in!</li>
+                        <li>Immerse yourself in the language by watching Spanish TV/movies, reading Spanish novels, listening to Spanish music/podcasts... whichever you enjoy!</li>
+                        <li>Create small, manageable goals: don't get too ahead of yourself, start small and continue to work hard each day to accomplish a goal!</li>
+                        <li>Have fun with it, the more you are intrinsically motivated, the more you will commit!</li>
+                    </Paper>
+                </Grid>
             <Button onClick={playClick} component={Link} to="/lessons" variant="contained" color="primary" style={{ marginTop: '20px' }}>
                 Start Your First Lesson
             </Button>

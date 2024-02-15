@@ -22,6 +22,7 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import {SignOutUser} from '../services/Auth.js'
+import Avatar from '@mui/material/Avatar'
 
 const NavBar = ({user, setUser}) => {
     const [state, setState] = useState({left: false})
@@ -93,6 +94,7 @@ const NavBar = ({user, setUser}) => {
         </Box>
     );
 
+    console.log(user)
     return (
         <div>
             <Box sx={{ flexGrow: 1}}>
@@ -126,7 +128,12 @@ const NavBar = ({user, setUser}) => {
                                 </Link>
                             </Typography>
                         <Typography variant="h5" sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center'}}>
-                            {user ? `Hola ${user.name}!`: ""}
+                            {user ? (
+                                <div style={{ display: 'flex', alignItems: 'center'}}>
+                                    {user.avatar && <Avatar src={user.avatar} alt={user.name} sx={{ marginRight: 1}}/>}
+                                    {`Hola ${user.name}!`}
+                                </div>
+                            ) : ''}
                         </Typography>
                         <Button component={Link} to='/register' sx={{ backgroundColor: '#FFB300', color: '#ffff', mr: 2 }}>Sign Up</Button>
                         {user ? <Button onClick={handleLogout} sx={{ backgroundColor: '#FFB300', color: '#ffff', mr: 2 }}>Log Out</Button>: <Button component={Link} to='/signin' sx={{ backgroundColor: '#FFB300', color: '#ffff' }}>Log In</Button>}
