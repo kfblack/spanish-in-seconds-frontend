@@ -99,13 +99,20 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
 
     const handleSubmitQuiz = (quizId) => {
         const quiz = quizzes.find(quiz => quiz._id === quizId)
-        let score = 0;
+        let score = 0; 
+        let incorrectQuestions = []
         quiz.questions.forEach(question => {
             if (userAnswer && userAnswer[quizId][question._id] === question.correctAnswer) {
                 score += 1
+            } else {
+                incorrectQuestions.push(question.content)
             }
         })
-        alert(`You scored ${score} out of ${quiz.questions.length} on the quiz!`)
+        let feedbackMessage = `You scored ${score} out of ${quiz.questions.length}!`
+        if (incorrectQuestions.length > 0) {
+            feedbackMessage += '\n\Incorrect Questions:\n-' + incorrectQuestions.join('\n- ')
+        }
+        alert(feedbackMessage)
     }
 
     const indexToLetter = (index) => String.fromCharCode(65 + index)
@@ -163,8 +170,8 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                                 {lesson.activities?.map(activity => (
                                     <Card key={activity._id} variant="outlined" sx={{ marginBottom: '10px' }}>
                                         <CardContent>
-                                            <Typography variant="body1">Description: {activity.description}</Typography>
-                                            <Typography variant='body2'>Activity: {activity.content}</Typography>
+                                            <Typography variant="h6">Description: {activity.description}</Typography>
+                                            <Typography variant='h6'>Activity: {activity.content}</Typography>
                                             {activityResponse[activity._id] && (
                                                 <Typography color={activityResponse[activity._id].isCorrect? 'green': 'red'}>{activityResponse[activity._id].feedback}</Typography>
                                             )}
@@ -175,7 +182,7 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                                                 </div>
                                             )}
                                             {activity.activityType === 'fill-in-the-blank' &&(
-                                                <div>
+                                                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
                                                 <TextField
                                                     label="Your answer"
                                                     variant='outlined'
@@ -186,7 +193,7 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
                                                 </div>
                                             )}
                                             {activity.activityType === 'short-answer' && (
-                                                <div>
+                                                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
                                                 <TextField
                                                     label="Your answer here"
                                                     variant='outlined'

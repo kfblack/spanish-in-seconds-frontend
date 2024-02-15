@@ -17,11 +17,11 @@ return (
     <div>
         <NavBar user={user} setUser={setUser}/>
         <Container>
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography variant="h4" component="h1" gutterBottom sx={{marginTop: 5}}>
                 Learn Spanish Quickly!
             </Typography>
             <Typography variant="h6" component="h2" gutterBottom>
-                Welcome to your guide to learning Spanish quickly for your next big trip!
+                Welcome to your guide to learning Spanish quickly, whether it is for your next big trip or your New Year's Resolution, we help you achieve your goals!
             </Typography>
             <Typography variant="body1" paragraph>
                 Whether you are completely new, or took two classes in High School and cheated your way through, we aim to get you proficient in no time!

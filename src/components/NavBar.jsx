@@ -103,7 +103,7 @@ const NavBar = ({user, setUser}) => {
                             edge='start'
                             color='inherit'
                             aria-label='menu'
-                            sx= {{ mr: 2}}
+                            sx= {{ mr: -20}}
                         >
                         <div>
                             {['Menu'].map((anchor) => (
@@ -120,13 +120,13 @@ const NavBar = ({user, setUser}) => {
                             ))}
                         </div>
                         </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            Spanish in Seconds
-                        </Link>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            <Typography variant="h5" component="div" sx={{flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    Spanish in Seconds
+                                </Link>
+                            </Typography>
+                        <Typography variant="h5" sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center'}}>
                             {user ? `Hola ${user.name}!`: ""}
-                        </Typography>
                         </Typography>
                         <Button component={Link} to='/register' sx={{ backgroundColor: '#FFB300', color: '#ffff', mr: 2 }}>Sign Up</Button>
                         {user ? <Button onClick={handleLogout} sx={{ backgroundColor: '#FFB300', color: '#ffff', mr: 2 }}>Log Out</Button>: <Button component={Link} to='/signin' sx={{ backgroundColor: '#FFB300', color: '#ffff' }}>Log In</Button>}
