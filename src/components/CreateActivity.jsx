@@ -58,8 +58,8 @@ const CreateActivity = ({activities, user, setUser}) => {
         <div>
         <NavBar user={user} setUser={setUser}/>
         <Container>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Create an Activity:
+            <Typography variant="h6" component="h1" gutterBottom sx={{marginTop: '10px'}}>
+                <h2>Create an Activity</h2>
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField

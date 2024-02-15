@@ -161,7 +161,7 @@ const Lesson = ({lessons, activities, quizzes, user, setUser}) => {
         <div>
             <NavBar user={user} setUser={setUser}/>
             <Container>
-                <Typography variant="h5" component="h1" gutterBottom>
+                <Typography variant="h6" component="h1" gutterBottom sx={{marginTop: '10px'}}>
                     <h1>Lessons</h1>
                 </Typography>
                 {lessons.map(lesson => (

@@ -6,7 +6,7 @@ import { Container, Typography, TextField, Radio, Button, FormControlLabel, Box,
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const CreateQuiz = ({quizzes, user, setUser}) => {
+const CreateQuiz = ({quizzes, user, setUser, setQuizzes}) => {
 
     let navigate = useNavigate();
 
@@ -151,7 +151,7 @@ const CreateQuiz = ({quizzes, user, setUser}) => {
         <div>
             <NavBar user={user} setUser={setUser}/>
         <Container>
-            <Typography variant="h4" component="h1" gutterBottom>Create a Quiz:</Typography>
+            <Typography variant="h6" component="h1" gutterBottom sx={{marginTop: '10px'}}><h2>Create a Quiz</h2></Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField
                     margin="normal"

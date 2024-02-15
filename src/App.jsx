@@ -78,7 +78,7 @@ function App() {
           <Route path='/progress/:userId' element={<Progress user={user} setUser={setUser}/>} />
           <Route path='/create' element={<CreateLesson setLessons={setLessons} user={user} setUser={setUser}/>}/>
           <Route path='/createActivity' element={<CreateActivity activities={activities} user={user} setUser={setUser}/>}/>
-          <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes} user={user} setUser={setUser}/>}/>
+          <Route path='/createQuiz' element={<CreateQuiz quizzes={quizzes} user={user} setUser={setUser} setQuizzes={setQuizzes}/>}/>
           <Route path='/update-lesson/:lessonId' element={<UpdateLesson user={user} setUser={setUser}/>} />
           <Route path='/update-activity/:activityId' element={<UpdateActivity user={user} setUser={setUser}/>} />
           <Route path='/update-quiz/:quizId' element={<UpdateQuiz user={user} setUser={setUser}/>} />

@@ -25,7 +25,7 @@ const Progress = ({user, setUser}) => {
         <div>
             <NavBar user={user} setUser={setUser}/>
             <Container>
-                <Typography variant='h4' component='h1' gutterBottom>Lessons Completed</Typography>
+                <Typography variant='h6' component='h1' gutterBottom sx={{marginTop: '10px'}}><h2>Lessons Completed</h2></Typography>
                 <Box>
                     {userData.progress && userData?.progress.map((prog, index) => (
                         <Card key={index} sx={{ mb: 2}}>

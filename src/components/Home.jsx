@@ -37,8 +37,8 @@ return (
     <div>
         <NavBar user={user} setUser={setUser}/>
         <Container>
-            <Typography variant="h4" component="h1" gutterBottom sx={{marginTop: 5}}>
-                Learn Spanish Quickly!
+            <Typography variant="h5" component="h1" gutterBottom sx={{marginTop: 5}}>
+                <h2>Learn Spanish Quickly!</h2>
             </Typography>
             <Typography variant="h6" component="h2" gutterBottom>
                 Welcome to your guide to learning Spanish quickly, whether it is for your next big trip or your New Year's Resolution, we help you achieve your goals!
