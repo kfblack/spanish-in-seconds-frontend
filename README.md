@@ -49,4 +49,6 @@ This project is a full-stack MERN application, on learning the basics of Spanish
 #### **_Credits_**
 
 ##### Images: [Spanish Dance](https://www.utrgv.edu/claa/divisions-and-disciplines/dance/flamenco/index.htm) | [Spanish Food](https://housinganywhere.com/Spain/traditional-unique-food-in-spain) | [Spanish Flag](https://en.wikipedia.org/wiki/Flag_of_Spain) | [Spanish Landmark](https://meetmeindepartures.com/landmarks-in-spain-spanish-bucket-list/) | [Spanish Art](https://www.singulart.com/en/blog/2023/09/28/famous-spanish-artists/)
+
+##### Videos: [Olly Richards - 11 Reasons You Should Learn Spanish Now](https://www.youtube.com/watch?v=7QIdFk6yzh8&ab_channel=OllyRichards) | [NYCityCenter - Ballet Flamenco Andalucia](https://www.youtube.com/watch?v=cm9IYSDxagc&ab_channel=NYCityCenter) | [Spanish BOLO - 7 Best Art Museums in Spain](https://www.youtube.com/watch?v=FHv_foVHugQ&ab_channel=SpanishBOLO) | [Mark Wiens - Spanish Food Tour](https://www.youtube.com/watch?v=wLQFtcqSL0k&t=657s&ab_channel=MarkWiens) | [ROAD TRIP Spain - 30 extraordinary MONUMENTS of SPAIN](https://www.youtube.com/watch?v=crUMhH-tfqA&ab_channel=ROADTRIPSpainandPortugal)
 ##### Code Help: [Material UI Docs](https://mui.com/material-ui/getting-started/)

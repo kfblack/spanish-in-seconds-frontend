@@ -8,16 +8,15 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/mate
 
 
 const cultureImages = [
-    { url: 'https://i.postimg.cc/4xTXxsDp/images.jpg', title: 'Spanish Dance' },
-    { url: 'https://i.postimg.cc/TwyPWQCb/download.jpg', title: 'Spanish Cuisine' },
-    { url: 'https://i.postimg.cc/sDC2vYSB/download-1.jpg', title: 'Historical Landmarks' },
-    { url: 'https://i.postimg.cc/fT7RXVj8/download-2.jpg', title: 'Spanish Art' },
-];
-
+    { url: 'https://i.postimg.cc/4xTXxsDp/images.jpg', title: 'Spanish Dance', videoUrl: 'https://www.youtube.com/embed/cm9IYSDxagc', description: 'Traditional Spanish Flamenco dance, performed during the Flamenco Festival at the New York City Center!' },
+    { url: 'https://i.postimg.cc/TwyPWQCb/download.jpg', title: 'Spanish Cuisine', videoUrl: 'https://www.youtube.com/embed/wLQFtcqSL0k', description: 'A comprehensive food tour, by Mark Wiens, in Madrid, Spain!'},
+    { url: 'https://i.postimg.cc/sDC2vYSB/download-1.jpg', title: 'Historical Landmarks', videoUrl: 'https://www.youtube.com/embed/crUMhH-tfqA', description: 'A video by ROAD TRIP Spain, showing a comprehensive list of 30 famous monuments in Spain!'},
+    { url: 'https://i.postimg.cc/fT7RXVj8/download-2.jpg', title: 'Spanish Art', videoUrl: 'https://www.youtube.com/embed/FHv_foVHugQ', description: 'A video made by Spanish BOLO, showcasing 7 of their best art museums found in Spain!' },
+]
 
 const Home = ({user, setUser}) => {
 
-    const [openDialog, setOpenDialog] = useState(false)
+    const [openDialog, setOpenDialog] = useState(null)
 
     const clickSound = useRef(new Audio('../sounds/mixkit-quick-positive-video-game-notification-interface-265.wav'));
 
@@ -25,12 +24,12 @@ const Home = ({user, setUser}) => {
         clickSound.current.play()
     }
 
-    const handleClickOpenDialog = () => {
-        setOpenDialog(true)
+    const handleClickOpenDialog = (index) => {
+        setOpenDialog(index)
     }
 
     const handleClickCloseDialog = () => {
-        setOpenDialog(false)
+        setOpenDialog(null)
     }
 
 
@@ -66,7 +65,7 @@ return (
                         </CardContent>
                     </Card>
                 </Grid>
-                <Dialog open={openDialog} onclose={handleClickCloseDialog}>
+                <Dialog open={openDialog} onClose={handleClickCloseDialog}>
                     <DialogTitle>{"Why Learn Spanish?"}</DialogTitle>
                     <DialogContent>
                         <iframe
@@ -103,7 +102,7 @@ return (
             <Grid container spacing={2}>
                 {cultureImages.map((image, index) => (
                     <Grid item xs={12} sm={6} md={3} key={index}>
-                        <Card>
+                        <Card onClick={() => handleClickOpenDialog(index)} style={{ cursor: 'pointer'}}>
                             <CardMedia
                                 component="img"
                                 height="140"
@@ -119,6 +118,26 @@ return (
                     </Grid>
                 ))}
             </Grid>
+            {cultureImages.map((image, index) => (
+                <Dialog open={openDialog === index} onClose={handleClickCloseDialog} key={index}>
+                <DialogTitle>{image.title}</DialogTitle>
+                    <DialogContent>
+                        <iframe
+                            width='560'
+                            height='315'
+                            src={image.videoUrl}
+                            title={image.title}
+                            frameBorder='0'
+                            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                            allowFullScreen
+                        ></iframe>
+                        <DialogContentText style={{ marginTop: '20px'}}>
+                            {image.description}
+                        </DialogContentText>
+                    </DialogContent>
+                    <Button onClick={handleClickCloseDialog}>Close</Button>
+                </Dialog>
+            ))}
             <Button onClick={playClick} component={Link} to="/lessons" variant="contained" color="primary" style={{ marginTop: '20px' }}>
                 Start Your First Lesson
             </Button>
